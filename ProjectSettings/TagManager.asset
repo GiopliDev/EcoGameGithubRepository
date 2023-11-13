@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plants
   - Pickable
+  - Enemy
   layers:
   - Default
   - TransparentFX

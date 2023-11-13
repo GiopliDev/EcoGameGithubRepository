@@ -2,58 +2,105 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Variabili associate ai componenti
-    Rigidbody2D rb;
-    public bool isColliding;
-    public Collider2D lastCollision;
 
+    Rigidbody2D rb;
+
+    [Header("Player Hand")]
     public Transform lookingDirection;
 
-    public bool hasObjectPickedUp = false;
-    public GameObject objectInHand;
-
-    public Tilemap world;
-
+    [Header("Speed Settings")]
+    public float walkingSpeed = 3.5f;
     public float speed = 3.5f;
+    public float sprintSpeed = 4f;
+    public bool isSprinting = false;
 
+    [Header("Stamina Settings")]
+    public float maxStamina = 100f;
+    public float stamina = 100f;
+    public float staminaDrain = 5f;
+    public float staminaRegen = 10f;
+    public GameObject staminaBar;
+
+    [Header("Tilemap")]
+    public Tilemap world;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = walkingSpeed;
+        staminaBar = GameObject.Find("StaminaBar");
+        staminaBar.GetComponent<Slider>().maxValue = maxStamina;
+        staminaBar.GetComponent<Slider>().value = stamina;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //movimento del player
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        movement(horizontal, vertical);
-
-        //gestione dell'oggetto che porta con se il player
         Vector3 tilePos = world.WorldToCell(lookingDirection.position);
         tilePos.z = 0;
         tilePos.x += 0.5f;
         tilePos.y += 0.5f;
-        pickUpManager();
+        //movimento del player
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isSprinting = false;
+        }
+
+        if (isSprinting)
+        {
+            if (stamina > staminaDrain)
+            {
+                sprint();
+                staminaBar.GetComponent<Slider>().value = stamina;
+            }
+            else
+            {
+                speed = walkingSpeed;
+            }
+            
+        }
+        else
+        {
+            if (stamina < maxStamina)
+            {
+                speed = walkingSpeed;
+                regenStamina();
+                staminaBar.GetComponent<Slider>().value = stamina;
+            }
+            
+        }
+
+        movement(horizontal, vertical,speed);
+
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void sprint()
     {
-        isColliding = true;
-        lastCollision = collision.collider;
+        speed = sprintSpeed;
+        stamina -= staminaDrain * Time.deltaTime * 100;
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void regenStamina()
     {
-        isColliding = false;
+        stamina += staminaRegen * Time.deltaTime * 100;
+        if (stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
     }
-
-    public void movement(float horizontal,float vertical)
+    private void movement(float horizontal,float vertical,float speed)
     {
         if (horizontal < 0 || horizontal > 0)
         {
@@ -90,35 +137,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void pickUpManager() //il tile che si occupa di trasportare gli oggetti 
-    {    //se premo E
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //e non ho niente in mano
-            if (hasObjectPickedUp == false)
-            {   
-                //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
-                if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable && isColliding)
-                {
-                    hasObjectPickedUp = true;
 
-                    //assegno l'oggetto che ho in mano
-                    objectInHand = lastCollision.gameObject;
-
-
-                    objectInHand.GetComponent<sceneObjectManager>().inPlayerHand();
-
-                }
-            }
-            else //quando ho premuto E,se avevo gia qualcosa in mano
-            {
-
-                if (objectInHand.GetComponent<sceneObjectManager>().releaseObject())
-                {
-                    hasObjectPickedUp = false;
-                }
-                
-            }
-        }
-    }
+    
 }
