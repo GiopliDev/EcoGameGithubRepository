@@ -7,6 +7,7 @@ if "%1" neq "" (
 set file=
 set /p "folder=Folder Name (EMPTY to get default `EcoGameGithubRepository`): "
 if "%folder%" EQU "" (
+	move ./EcoGameGithubRepository ./%folder%
 	goto eof
 )
 	
