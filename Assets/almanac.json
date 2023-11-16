@@ -1,0 +1,20 @@
+{
+  "Collection": [
+    {
+      "ID": "acqua",
+      "Image": "../img/pianta/acqua.png",
+      "Info": "Pianta che genera acqua",
+      "Name": "Pianta Acqua",
+      "Section": "pianta",
+      "Unlocked": false
+    },
+    {
+      "ID": "legno",
+      "Image": "../img/pianta/legno.png",
+      "Info": "Pianta che fa roba?",
+      "Name": "Pianta Legno",
+      "Section": "pianta",
+      "Unlocked": false
+    }
+  ]
+}
