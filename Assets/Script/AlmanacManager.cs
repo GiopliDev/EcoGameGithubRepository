@@ -1,27 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Text.JSON;
 using System.IO;
+using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
 {
-    public static string JSON_DIR = "";
+    public static string JSON_DIR = "./Assets/almanac.json";
     Almanac almanac;
-    // Start is called before the first frame update
+    bool isShown = false;
+
     void Start()
     {
-        Almanac? tempAl = JsonSerializer.Deserialize<Almanac>(
-            File.ReadAllText(JSON_DIR)
-        );
-        if (tempAl != null) { throw new FileNotFoundException(tempAl.ToString()); }
-        this.almanac = tempAl;
+        string JSON_DATA = File.ReadAllText(AlmanacManager.JSON_DIR);
+        Debug.Log(JSON_DATA.Length);
+        this.almanac = JsonUtility.FromJson<Almanac>(JSON_DATA);
+        //Debug.Log(this.almanac.Collection[0]);
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if(isShown) this.HideAlmanac();
+            else this.ShowAlmanac();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && this.isShown) this.HideAlmanac();
+    }
+    void ShowAlmanac()
+    {
+        this.isShown = true;
+    }
+    void HideAlmanac()
+    {
+        this.isShown = false;
     }
 }
 
