@@ -14,14 +14,15 @@ public class sceneObjectManager : MonoBehaviour
     private Tilemap world;
 
     private GameObject player;
-    private GameObject lookingDirection;
     private GameObject lastCollision;
 
-    public void inPlayerHand()
+    public void objectPicked()
     {
         gameObject.layer = LayerMask.NameToLayer("ignorePlayerCollision");
         isInPlayerHand = true;
-        transform.position = lookingDirection.transform.position;
+    }
+    public void inPlayerHand()
+    {
         gm.overlayPos = transform.position;
         gm.tileOverlayStart();
     }
@@ -52,7 +53,6 @@ public class sceneObjectManager : MonoBehaviour
     public void Start()
     {
         player = GameObject.Find("Player");
-        lookingDirection = GameObject.Find("lookingDirection");
         world = GameObject.Find("Tilemap").GetComponent<Tilemap>();
     }
     public void Update()
