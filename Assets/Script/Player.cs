@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     [Header("Tilemap")]
     public Tilemap world;
+    public mapManager map;
 
     [Header("Health Settings")]
     public float maxHp = 10f;
@@ -69,6 +70,18 @@ public class Player : MonoBehaviour
         {
             toggleTool(2); //pala
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (map.mapOpened == false)
+            {
+                map.openMap();
+            }
+            else
+            {
+                map.closeMap();
+            }
+        }
+         
 
     }
     
