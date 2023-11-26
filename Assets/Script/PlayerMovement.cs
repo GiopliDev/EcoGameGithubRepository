@@ -54,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        isSprinting = Input.GetKeyDown(KeyCode.LeftShift);
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        
 
         if (isSprinting)
         {
