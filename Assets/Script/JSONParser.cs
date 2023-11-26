@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System;
+#nullable enable
 public static class JSONParser
 {
     public static T FromAsObject<T>(string jsonString)where T : new()
@@ -238,18 +239,36 @@ internal static class JSONParser_ObjectToParam
             for (int i = 0; i < arr.Length; i++)
             {
                 if (arr[i] == null) castedArr.SetValue(null, i);
-                else castedArr.SetValue(
-                        ParseDictionaryTo<T>((Dictionary<string, object?>)arr[i]),
+                else
+                {
+                    Dictionary<string, object?>? dict = (Dictionary<string, object?>?)arr[i];
+                    if(dict == null)
+                    {
+                        castedArr.SetValue(null, i);
+                        continue;
+                    }
+                    castedArr.SetValue(
+                        ParseDictionaryTo<T>(
+                                dict
+                            ),
                         i);
+
+                }
             }
         }
         else if (arr[0]?.GetType().Equals(typeof(object?[])) == true)
         {
             for (int i = 0; i < arr.Length; i++)
             {
+                object?[]? val = (object?[]?)arr[i];
+                if (val == null)
+                {
+                    castedArr.SetValue(null, i);
+                    continue;
+                }
                 castedArr.SetValue(
                     ParseArrayTo<T>(
-                            (object?[])arr[i]
+                            val
                     ),
                     i
                 );
@@ -356,3 +375,4 @@ internal static class JSONParser_ParamToObject
             || t.Equals(typeof(decimal));
     }
 }
+#nullable enable

@@ -1,19 +1,19 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
 {
+    private PlayerMovement player;
+
+    [Header("Almanacco")]
     public static string JSON_DIR = "./Assets/almanac.json";
-    Almanac almanac;
-    bool isShown = false;
+    public Almanac almanac = new();
+    public bool isShown = false;
+
     void Start()
     {
         string JSON_DATA = System.IO.File.ReadAllText(AlmanacManager.JSON_DIR);
-        //Debug.Log(JSON_DATA);
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
-        Debug.Log(this.almanac.Collection[1].ID);
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
     void Update()
     {
@@ -27,17 +27,21 @@ public class AlmanacManager : MonoBehaviour
     void ShowAlmanac()
     {
         this.isShown = true;
+        player.canMove = false;
+        Debug.Log("Shown Almanac");
     }
     void HideAlmanac()
     {
         this.isShown = false;
+        player.canMove = true;
+        Debug.Log("Hidden Almanac");
     }
 }
-class Almanac
+public class Almanac
 {
     public CollectionElement[] Collection { get; set; }
 }
-class CollectionElement
+public class CollectionElement
 {
     public string ID { get; set; }
     public string Image { get; set; } // ./img/pianta.png

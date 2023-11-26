@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -17,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 3.5f;
     public float sprintSpeed = 4f;
     public bool isSprinting = false;
+    public bool canMove = true;
 
     [Header("Stamina Settings")]
     public float maxStamina = 100f;
@@ -44,55 +44,45 @@ public class PlayerMovement : MonoBehaviour
         tilePos.z = 0;
         tilePos.x += 0.5f;
         tilePos.y += 0.5f;
+
+        if (!canMove)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
         //movimento del player
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            isSprinting = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            isSprinting = false;
-        }
+        isSprinting = Input.GetKeyDown(KeyCode.LeftShift);
 
         if (isSprinting)
         {
             if (stamina > staminaDrain)
             {
-                sprint();
-                staminaBar.GetComponent<Slider>().value = stamina;
+                Sprint();
             }
             else
             {
                 speed = walkingSpeed;
             }
-            
         }
-        else
+        else if (stamina < maxStamina)
         {
-            if (stamina < maxStamina)
-            {
-                speed = walkingSpeed;
-                regenStamina();
-                staminaBar.GetComponent<Slider>().value = stamina;
-            }
-            
+            speed = walkingSpeed;
+            RegenStamina();
+            staminaBar.GetComponent<Slider>().value = stamina;
         }
-
-        movement(horizontal, vertical,speed);
-
-        
+        Movement(horizontal, vertical, speed);
     }
 
-    private void sprint()
+    private void Sprint()
     {
         speed = sprintSpeed;
         stamina -= staminaDrain * Time.deltaTime * 100;
+        staminaBar.GetComponent<Slider>().value = stamina;
     }
-
-    private void regenStamina()
+    private void RegenStamina()
     {
         stamina += staminaRegen * Time.deltaTime * 100;
         if (stamina > maxStamina)
@@ -100,43 +90,37 @@ public class PlayerMovement : MonoBehaviour
             stamina = maxStamina;
         }
     }
-    private void movement(float horizontal,float vertical,float speed)
+    /// <summary>
+    /// Muove il rigidBody con il rispettivo oggetto
+    /// </summary>
+    /// <param name="horizontal">Valore per muovere orizzontalmente</param>
+    /// <param name="vertical">Valore per muovere verticalmente</param>
+    /// <param name="speed">Fattore di velocita</param>
+    private void Movement(float horizontal, float vertical, float speed = 1)
     {
-        if (horizontal < 0 || horizontal > 0)
+        if(horizontal == 0 && vertical == 0)
         {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-            if (horizontal < 0)
-            {
-                lookingDirection.localPosition = new Vector2(-1.25f, -0.1f);
-            }
-            else
-            {
-                lookingDirection.localPosition = new Vector2(1.25f, -0.1f);
-            }
+            rb.velocity = Vector2.zero;
+            return;
         }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-        if (vertical < 0 || vertical > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, vertical * speed);
-            if (vertical < 0)
-            {
-                lookingDirection.localPosition = new Vector2(0f, -0.6f);
-            }
-            else
-            {
-                lookingDirection.localPosition = new Vector2(0f, 0.6f);
-            }
-        }
-        else
-        {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-        }
+        speed /= Mathf.Sqrt(Mathf.Pow(vertical, 2) + Mathf.Pow(horizontal, 2)); //Sempre != 0
+        horizontal *= speed;
+        vertical *= speed;
+        rb.velocity = new Vector2(horizontal, vertical);
+        lookingDirection.localPosition = new Vector2(
+            1.25f * GetSignFromValue(horizontal),
+            0.6f * GetSignFromValue(vertical)
+        );
     }
-
-
-    
+    /// <summary>
+    /// Ritorna il segno del valore
+    /// </summary>
+    /// <param name="val"></param>
+    /// <returns>0 se e 0, 1 se e positivo e -1 se e negativo</returns>
+    private int GetSignFromValue(float val)
+    {
+        if (val == 0) return 0;
+        if (val > 0) return 1;
+        return -1;
+    }
 }
