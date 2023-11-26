@@ -2,21 +2,25 @@ using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
 {
-    private PlayerMovement player;
+    private PlayerMovement playerMV;
+    public Almanac almanac = new();
+    public GameObject almanacContainer;
 
     [Header("Almanacco")]
-    public static string JSON_DIR = "./Assets/almanac.json";
-    public Almanac almanac = new();
+    public const string JSON_DIR = "./Assets/almanac.json";
     public bool isShown = false;
 
     void Start()
     {
-        string JSON_DATA = System.IO.File.ReadAllText(AlmanacManager.JSON_DIR);
+        string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
-        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        almanacContainer = GameObject.Find("Almanac");
+        almanacContainer.SetActive(false);
     }
     void Update()
     {
+        almanacContainer.transform.position = playerMV.transform.position;
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (isShown) this.HideAlmanac();
@@ -27,13 +31,15 @@ public class AlmanacManager : MonoBehaviour
     void ShowAlmanac()
     {
         this.isShown = true;
-        player.canMove = false;
+        playerMV.canMove = false;
+        almanacContainer.SetActive(true);
         Debug.Log("Shown Almanac");
     }
     void HideAlmanac()
     {
         this.isShown = false;
-        player.canMove = true;
+        almanacContainer.SetActive(false);
+        playerMV.canMove = true;
         Debug.Log("Hidden Almanac");
     }
 }

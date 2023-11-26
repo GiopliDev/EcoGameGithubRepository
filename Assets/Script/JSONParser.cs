@@ -13,7 +13,7 @@ public static class JSONParser
     public static T[] FromAsArray<T>(string jsonString) where T : new()
     {
         object obj = (JSONParser_DecomposeJSON.From(jsonString)) ?? throw new Exception();
-        return (T[])JSONParser_ObjectToParam.ParseArrayTo<T>((object?[])obj);
+        return JSONParser_ObjectToParam.ParseArrayTo<T>((object?[])obj);
     }
     public static object? From(string jsonString) => JSONParser_DecomposeJSON.From(jsonString);
 
@@ -227,11 +227,11 @@ internal static class JSONParser_ObjectToParam
 
         return parsed;
     }
-    public static Array ParseArrayTo<T>(object?[] arr) where T : new()
+    public static T[] ParseArrayTo<T>(object?[] arr) where T : new()
     {
         if (arr.Length == 0)
         {
-            return new object?[0];
+            return new T[0];
         }
         Array castedArr = Array.CreateInstance(typeof(T), arr.Length);
         if (arr[0]?.GetType().Equals(typeof(Dictionary<string, object?>)) == true)
@@ -274,7 +274,7 @@ internal static class JSONParser_ObjectToParam
                 );
             }
         }
-        return castedArr;
+        return (T[])castedArr;
     }
 
 }
