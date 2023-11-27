@@ -3,10 +3,9 @@ using UnityEngine;
 public class AlmanacManager : MonoBehaviour
 {
     private PlayerMovement playerMV;
-    public Almanac almanac = new();
-    public GameObject almanacContainer;
+    public Almanac almanac;
+    public GameObject almanacContainer, almanacTabs, almanacBody;
 
-    [Header("Almanacco")]
     public const string JSON_DIR = "./Assets/almanac.json";
     public bool isShown = false;
 
@@ -14,13 +13,17 @@ public class AlmanacManager : MonoBehaviour
     {
         string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
-        playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        almanacContainer = GameObject.Find("Almanac");
-        almanacContainer.SetActive(false);
+        this.playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
+
+        this.almanacContainer = GameObject.Find("Almanac");
+        this.almanacContainer.transform.position = new Vector3(0, 0, -9);
+        this.almanacTabs = GameObject.Find("AlmanacTabs");
+        this.almanacBody = GameObject.Find("AlmanacBody");
+        //////// TODO: GameObject.Find("ExitAlmanac").OnClick(HideAlmanac);
+        this.HideAlmanac();
     }
     void Update()
     {
-        almanacContainer.transform.position = playerMV.transform.position;
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (isShown) this.HideAlmanac();
@@ -31,15 +34,17 @@ public class AlmanacManager : MonoBehaviour
     void ShowAlmanac()
     {
         this.isShown = true;
-        playerMV.canMove = false;
-        almanacContainer.SetActive(true);
+        this.playerMV.canMove = false;
+        this.almanacBody.SetActive(true);
+        this.almanacTabs.SetActive(true);
         Debug.Log("Shown Almanac");
     }
     void HideAlmanac()
     {
         this.isShown = false;
-        almanacContainer.SetActive(false);
-        playerMV.canMove = true;
+        this.playerMV.canMove = true;
+        this.almanacBody.SetActive(false);
+        this.almanacTabs.SetActive(false);
         Debug.Log("Hidden Almanac");
     }
 }
