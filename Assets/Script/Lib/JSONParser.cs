@@ -45,6 +45,7 @@ internal static class JSONParser_StringExtensions
     }
     public static string[] SplitExternalToStrings(string value, char splitChar)
     {
+        if(value.Length == 0) return new string[0];
         List<string> split = new();
         bool inString = value[0] == '"';
         int lastIndex = 0;
@@ -157,8 +158,14 @@ internal static class JSONParser_DecomposeJSON
         if (value.StartsWith('"') && value.EndsWith('"')) return value;
         if (value.StartsWith('$')) return objectsID[int.Parse(value.Substring(1))];
         if (value.StartsWith('@')) return arraysID[int.Parse(value.Substring(1))];
+        if (byte.TryParse(value, out byte byteVal)) return byteVal;
+        if (short.TryParse(value, out short shortVal)) return shortVal;
+        if (int.TryParse(value, out int intVal)) return intVal;
         if (long.TryParse(value, out long longVal)) return longVal;
+        if (ulong.TryParse(value, out ulong ulongVal)) return ulongVal;
+        if (float.TryParse(value, out float floatVal)) return floatVal;
         if (double.TryParse(value, out double doubleVal)) return doubleVal;
+        if (decimal.TryParse(value, out decimal decimalVal)) return decimalVal;
         throw new NotImplementedException($"Valore {value} senza tipo apparente");
     }
     private struct ObjectStart
@@ -310,12 +317,24 @@ internal static class JSONParser_SerializeJSON
     private static string ParseObjectToString(object? obj)
     {
         if (obj == null) return "null";
-        Type t = obj.GetType(); 
+        Type t = obj.GetType();
+
+
         if (t.Equals(typeof(string))) return (string)obj;
         if (t.Equals(typeof(bool))) return ((bool)obj).ToString().ToLower();
-        if (t.Equals(typeof(long))) return ((long)obj).ToString();
-        if (t.Equals(typeof(double))) return ((double)obj).ToString();
         if (t.Equals(typeof(object?[]))) return Serialize((object?[])obj);
+
+
+        if (t.Equals(typeof(byte))) return ((byte)obj).ToString();
+        if (t.Equals(typeof(short))) return ((short)obj).ToString();
+        if (t.Equals(typeof(int))) return ((int)obj).ToString();
+        if (t.Equals(typeof(long))) return ((long)obj).ToString();
+        if (t.Equals(typeof(ulong))) return ((ulong)obj).ToString();
+
+        if (t.Equals(typeof(float))) return ((float)obj).ToString();
+        if (t.Equals(typeof(double))) return ((double)obj).ToString();
+        if (t.Equals(typeof(decimal))) return ((decimal)obj).ToString();
+
         if (t.Equals(typeof(Dictionary<string, object?>))) return Serialize((Dictionary<string, object?>)obj);
         throw new NotImplementedException($"Valore {obj} senza tipo apparente");
     }
