@@ -1,0 +1,7 @@
+Git Clone 		Installare
+
+Git Pull 		Update installa
+
+Git Add.		Dici i file che vuoi aggiungere
+Git Commit		Aggiungi descrizione ai file che vuoi aggiungere
+Git Push		Upload i file aggiunti
