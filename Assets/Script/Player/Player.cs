@@ -70,6 +70,10 @@ public class Player : MonoBehaviour
         {
             toggleTool(2); //pala
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            //plant();//pianta
+        }
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (map.mapOpened == false)
@@ -84,7 +88,6 @@ public class Player : MonoBehaviour
          
 
     }
-    
     private void pickUpManager()
     {
         //e non ho niente in mano
@@ -97,7 +100,7 @@ public class Player : MonoBehaviour
 
                 //assegno l'oggetto che ho in mano
                 objectInHand = lastCollision.gameObject;
-
+                
 
                 objectInHand.GetComponent<sceneObjectManager>().objectPicked();
 

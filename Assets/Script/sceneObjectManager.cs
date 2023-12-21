@@ -26,7 +26,6 @@ public class sceneObjectManager : MonoBehaviour
         gm.overlayPos = transform.position;
         gm.tileOverlayStart();
     }
-
     public bool releaseObject()
     {
         if (isColliding)
