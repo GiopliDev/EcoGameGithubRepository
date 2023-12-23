@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class AlmanacManager : MonoBehaviour
         string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
         this.playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
-
+        this.almanac.CreateGameObjects();
         this.almanacContainer = GameObject.Find("Almanac");
         this.almanacContainer.transform.position = new Vector3(0, 0, -9);
         this.almanacTabs = GameObject.Find("AlmanacTabs");
@@ -38,7 +39,7 @@ public class AlmanacManager : MonoBehaviour
         this.playerMV.canMove = false;
         this.almanacBody.SetActive(true);
         this.almanacTabs.SetActive(true);
-        CollectionTabSelected();
+        this.CollectionTabSelected();
     }
     public void HideAlmanac()
     {
@@ -49,19 +50,24 @@ public class AlmanacManager : MonoBehaviour
     }
     public void CollectionTabSelected()
     {
+        this.HideAllElements();
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.8679245f, 0.2824849f, 0.2824849f);
-        Debug.Log(this.almanac.Collection[0].ToString());
     }
     public void TutorialTabSelected()
     {
+        this.HideAllElements();
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.8666667f, 0.7383271f, 0.2823529f);
-        Debug.Log(this.almanac.Tutorial[0].ToString());
     }
     public void MissionTabSelected()
     {
+        this.HideAllElements();
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.2823529f, 0.7346016f, 0.8666667f);
-        Debug.Log(this.almanac.Mission[0].ToString());
     }
+    void HideAllElements()
+    {
+
+    }
+
 }
 public class Almanac
 {
@@ -69,6 +75,21 @@ public class Almanac
     public TutorialInfoElement[] Tutorial { get; set; }
     public MissionInfoElement[] Mission { get; set; }
 
+    public void CreateGameObjects()
+    {
+        foreach (var item in this.Collection)
+        {
+            item.CreateGameObject();
+        }
+        foreach (var item in this.Tutorial)
+        {
+            item.CreateGameObject();
+        }
+        foreach (var item in this.Mission)
+        {
+            item.CreateGameObject();
+        }
+    }
     public override string ToString()
     {
         string coll = "", tut = "", miss = "";
@@ -110,9 +131,14 @@ public class CollectionElement
     /// E' stato sbloccato?
     /// </summary>
     public bool Unlocked { get; set; }
+    public GameObject Element { get; set; }
     public override string ToString()
     {
         return $"ID: {ID}, Image: {Image}, Info: {Info}, Name: {Name}, Section: {Section}, Unlocked: {Unlocked}";
+    }
+    public void CreateGameObject()
+    {
+
     }
 }
 public class TutorialInfoElement
@@ -129,9 +155,14 @@ public class TutorialInfoElement
     /// ID della missione per poter visualizzarla
     /// </summary>
     public int[] Requires { get; set; }
+    public GameObject Element { get; set; }
     public override string ToString()
     {
         return $"Text: {Text}, Image: {Image}, Requires: {JSONParser.To(Requires)}";
+    }
+    public void CreateGameObject()
+    {
+
     }
 }
 public class MissionInfoElement
@@ -155,8 +186,13 @@ public class MissionInfoElement
     /// Se è completata
     /// </summary>
     public bool IsDone { get; set; }
+    public GameObject Element { get; set; }
     public override string ToString()
     {
         return $"ID: {ID}, Title: {Title}, Tier: {Tier}, Description: {Description}, Requires: {JSONParser.To(Requires)}, IsDone: {IsDone}";
+    }
+    public void CreateGameObject()
+    {
+
     }
 }
