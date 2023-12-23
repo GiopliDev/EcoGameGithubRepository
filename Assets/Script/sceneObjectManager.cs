@@ -9,6 +9,7 @@ public class sceneObjectManager : MonoBehaviour
     public bool isGrabbable;
     public bool isInPlayerHand = false;
     public bool isColliding = false;
+    public bool isPlantable;
 
     public gameManager gm;
     private Tilemap world;

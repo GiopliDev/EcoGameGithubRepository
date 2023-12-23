@@ -72,7 +72,13 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //plant();//pianta
+            if (hasObjectInHand)
+            {
+                if (objectInHand.gameObject.name == "Seme")
+                {
+                    plant();//pianta
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -114,6 +120,25 @@ public class Player : MonoBehaviour
                 hasObjectInHand = false;
             }
 
+        }
+    }
+    public void plant() 
+    {
+        //controlla se l'ultimo oggetto al quale si è avvicinato è un vaso
+        if (lastCollision.GetComponent<sceneObjectManager>().isPlantable && isColliding)
+        {
+            Debug.Log("Entraaaa!!");
+            //controlla se non è già stato piantato e se sta collidendo
+            if ( lastCollision.gameObject.name=="Vase")
+            {
+                //sposta il seme che ho in mano sulla pianta
+                objectInHand.transform.position=lastCollision.GetComponentInChildren<Transform>().position;
+                //il seme inizia a crescere
+                Debug.Log(lastCollision.name + " vuole crescere");
+                objectInHand.GetComponent<Pianta>().startGrowth();
+                //viene eliminato ciò che ho in mano
+                hasObjectInHand = false;
+            }
         }
     }
 
