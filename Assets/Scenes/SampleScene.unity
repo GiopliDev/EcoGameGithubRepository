@@ -893,8 +893,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
+
 --- !u!1 &330640920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1091,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
->>>>>>> Stashed changes
+
 --- !u!1001 &362354215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8321,8 +8320,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4814250332526203444, guid: 85a4fac8752cc89489a9b18b80c6597e, type: 3}
   m_PrefabInstance: {fileID: 125020351}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-=======
+
 --- !u!114 &1624793637 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4710583448283940431, guid: 85a4fac8752cc89489a9b18b80c6597e, type: 3}
@@ -8523,7 +8521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96bfbada2f16b51479980fa758a563ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
->>>>>>> Stashed changes
+
 --- !u!1001 &1703039712
 PrefabInstance:
   m_ObjectHideFlags: 0
