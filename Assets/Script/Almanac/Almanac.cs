@@ -5,27 +5,30 @@ public class Almanac
     public TutorialInfoElement[] Tutorial { get; set; }
     public MissionInfoElement[] Mission { get; set; }
 
-    public void CreateGameObjects(float fatherWidth)
+    public void CreateGameObjects(GameObject father)
     {
-        Vector2 size = new(fatherWidth / 8, 100);
+        //La funzione nameof() prende sempre il nome del parametro, in questo caso Collection
+        //Torna utile per dare un errore se è stato cambiato il nome
+        Bounds b = father.GetComponent<BoxCollider2D>().bounds;
+        float fatherWidth = b.max.x - b.min.x;
+        Vector2 size = new(fatherWidth / 8, 15);
         for (int i = 0; i < this.Collection.Length; i++)
         {
             this.Collection[i].Element = AlmanacHelper.CreateGameObject(
-                nameof(this.Collection), //La funzione nameof() prende sempre il nome del parametro, in questo caso Collection
-                                         //Torna utile per dare un errore se è stato cambiato il nome
+                nameof(this.Collection), 
                 this.Collection[i].Name, 
                 size, 
-                fatherWidth, 
+                father, 
                 i);
         }
-        size = new Vector2(fatherWidth, 100);
+        size.x = fatherWidth;
         for (int i = 0; i < this.Tutorial.Length; i++)
         {
             this.Tutorial[i].Element = AlmanacHelper.CreateGameObject(
                 nameof(this.Tutorial), 
                 this.Tutorial[i].Title, 
                 size, 
-                fatherWidth,
+                father,
                 i);
         }
         for (int i = 0; i < this.Mission.Length; i++)
@@ -34,7 +37,7 @@ public class Almanac
                 nameof(this.Mission), 
                 this.Mission[i].Title, 
                 size,
-                fatherWidth,
+                father,
                 i);
         }
     }

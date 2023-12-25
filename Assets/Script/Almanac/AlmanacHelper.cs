@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class AlmanacHelper
 {
-    public static GameObject CreateGameObject(string scope, string name, Vector2 size, float fatherSize, int index)
+    public static GameObject CreateGameObject(string scope, string name, Vector2 size, GameObject father, int index)
     {
+        name = name.Replace(" ", "");
+        scope = scope.Replace(" ", "");
+
+        Bounds b = father.GetComponent<BoxCollider2D>().bounds;
+        float fatherSize = b.max.x - b.min.x;
+        int numOfElementInRow = (int)(fatherSize / size.x);
+
         GameObject element = new(
             $"AlmanacCell{scope}{name}",
             typeof(BoxCollider2D),
@@ -15,10 +20,13 @@ public static class AlmanacHelper
         coll.size = size;
         coll.autoTiling = true;
 
-        GameObject inner = new($"");
+        GameObject inner = new($"AlmanacCell{scope}{name}Inner");
 
-        element.transform.position = new Vector3(fatherSize % index, (int)(fatherSize / index));
+        element.transform.position = new Vector3(index % numOfElementInRow, (int)(index / numOfElementInRow));
+        inner.transform.parent = element.transform;
+        element.transform.parent = father.transform;
 
+        element.SetActive(false);
         return element;
     }
 }
