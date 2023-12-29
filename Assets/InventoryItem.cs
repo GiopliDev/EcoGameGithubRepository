@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +11,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
 
     [HideInInspector] public Item item;
+    //[HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
     private RectTransform canvasRectTransform;
@@ -16,15 +19,35 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 
 
-    public void InitializeItem(Item newItem) { 
-        item= newItem;
-        image.sprite= newItem.image;
-    
+    public void InitializeItem(Item newItem)
+    {
+        item = newItem;
+
+        if (image != null)
+        {
+            image.sprite = newItem.image;
+        }
+        else
+        {
+            // If image is null, try to find it on the same GameObject
+            image = GetComponent<Image>();
+
+            if (image != null)
+            {
+                image.sprite = newItem.image;
+            }
+            else
+            {
+                Debug.LogError("Image component is null. Make sure it is properly assigned or present on the same GameObject.");
+            }
+        }
     }
+
+
 
     private void Start()
     {
-        //InitializeItem(item);
+        InitializeItem(item);
         // Get the RectTransform of the Canvas
         canvasRectTransform = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
 

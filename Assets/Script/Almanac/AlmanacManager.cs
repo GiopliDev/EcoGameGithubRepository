@@ -28,6 +28,7 @@ public class AlmanacManager : MonoBehaviour
         this.almanac.CreateGameObjects(this.almanacCollection);
         this.CollectionTabSelected();
         this.HideAlmanac();
+        
     }
     void Update()
     {
