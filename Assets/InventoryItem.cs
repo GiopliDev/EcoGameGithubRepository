@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+
+
+
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
     [Header("UI")]
     public Image image;
+    public Text countText;
 
     [HideInInspector] public Item item;
-    //[HideInInspector] public int count = 1;
+    [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
     private RectTransform canvasRectTransform;
@@ -31,7 +38,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             // If image is null, try to find it on the same GameObject
             image = GetComponent<Image>();
-
+            
             if (image != null)
             {
                 image.sprite = newItem.image;
@@ -41,6 +48,23 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 Debug.LogError("Image component is null. Make sure it is properly assigned or present on the same GameObject.");
             }
         }
+
+        
+        RefreshCount();
+    }
+    
+    public void RefreshCount() {
+        countText = GetComponentInChildren<Text>();
+
+        if (countText != null)
+        {
+            countText.text = count.ToString();
+        }
+        else
+        {
+            Debug.LogError("countText component is null. Make sure it is properly assigned or present on the same GameObject.");
+        }
+        countText.text = count.ToString();
     }
 
 

@@ -7,6 +7,22 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventoryItemPrefab;
     public bool AddItem(Item item)
     {
+        //controlla per uno slot stackable
+        for (int i = 0; i < InventorySlots.Length; i++)
+        {
+            InventorySlot slot = InventorySlots[i];
+            InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemSlot != null &&
+                itemSlot.item ==item &&
+                itemSlot.count<4){
+                itemSlot.count++;
+                itemSlot.RefreshCount();
+                
+                
+                return true;
+            }
+        }
+
         //controlla per uno slot vuoto poi inserisce 
         for (int i = 0; i < InventorySlots.Length; i++)
         {
