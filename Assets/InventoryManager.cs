@@ -5,6 +5,33 @@ public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] InventorySlots;
     public GameObject InventoryItemPrefab;
+    int SelectedSlot=-1;
+
+    void ChangeSelectedSlot(int newValue) {
+        if (SelectedSlot >= 0)
+        {
+            InventorySlots[SelectedSlot].Deselect();
+        }
+        InventorySlots[newValue].Select();
+        SelectedSlot = newValue;
+        
+    }
+    public void Start()
+    {
+        ChangeSelectedSlot(0);
+    }
+    public void Update()
+    {
+        if (Input.inputString!=null) {
+            bool isNumber = int.TryParse(Input.inputString, out int number);
+            if (isNumber && number>0 && number<7) { 
+                ChangeSelectedSlot((int)number-1);
+            }
+        }
+    }
+
+
+
     public bool AddItem(Item item)
     {
         //controlla per uno slot stackable
