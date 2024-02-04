@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissionInfoElement
+public class MissionInfoElement : AbstractElement
 {
-    public int ID { get; set; }
-    public string Title { get; set; }
     /// <summary>
     /// Valore intero per l'importanza della missione,
+    /// <code></code>
     /// <example>
     /// 1 => Principale,
     /// 2 => Secondaria...
     /// </example>
     /// </summary>
     public int Tier { get; set; }
-    public string Description { get; set; }
-    /// <summary>
-    /// ID della missione per poter visualizzarla
-    /// </summary>
-    public int[] Requires { get; set; }
     /// <summary>
     /// Se è completata
     /// </summary>
-    public bool IsDone { get; set; }
-    public GameObject Element { get; set; }
+    public bool IsCompleted { get; set; }
     public override string ToString()
     {
-        return $"ID: {ID}, Title: {Title}, Tier: {Tier}, Description: {Description}, Requires: {JSONParser.To(Requires)}, IsDone: {IsDone}";
+        return "";
     }
-    public void CreateGameObject()
+#nullable enable
+    public override object ToDeserializedJSON()
     {
+        return new Dictionary<string, object?>()
+        {
+            { nameof(this.Info), this.Info },
+            { nameof(this.Requires), this.Requires },
+            { nameof(this.Title), this.Title },
 
+            { nameof(this.Tier), this.Tier },
+            { nameof(this.IsCompleted), this.IsCompleted }
+        };
     }
+#nullable restore
 }

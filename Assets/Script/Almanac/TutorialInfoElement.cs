@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialInfoElement
+public class TutorialInfoElement : AbstractElement
 {
-    public string Title;
-    /// <summary>
-    /// Descrizione
-    /// </summary>
-    public string Text { get; set; }
     /// <summary>
     /// Indirizzo dell'immagine
     /// </summary>
     public string Image { get; set; }
-    /// <summary>
-    /// ID della missione per poter visualizzarla
-    /// </summary>
-    public int[] Requires { get; set; }
-    public GameObject Element { get; set; }
     public override string ToString()
     {
-        return $"Text: {Text}, Image: {Image}, Requires: {JSONParser.To(Requires)}";
+        return $"";
+    }
+    public override object ToDeserializedJSON()
+    {
+        return new Dictionary<string, object>()
+        {
+            { nameof(this.Info), this.Info },
+            { nameof(this.Requires), this.Requires },
+            { nameof(this.Title), this.Title },
+
+            { nameof(this.Image), this.Image }
+        };
     }
 }

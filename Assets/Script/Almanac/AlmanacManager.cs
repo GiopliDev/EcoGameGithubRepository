@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
@@ -61,7 +59,7 @@ public class AlmanacManager : MonoBehaviour
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.8679245f, 0.2824849f, 0.2824849f);
         foreach (var element in this.almanac.Collection)
         {
-            element.Element.SetActive(true);
+            //element.ElementAsGameObject.SetActive(true);
         }
     }
     public void TutorialTabSelected()
@@ -70,7 +68,7 @@ public class AlmanacManager : MonoBehaviour
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.8666667f, 0.7383271f, 0.2823529f);
         foreach (var element in this.almanac.Tutorial)
         {
-            element.Element.SetActive(true);
+            //element.ElementAsGameObject.SetActive(true);
         }
     }
     public void MissionTabSelected()
@@ -79,22 +77,22 @@ public class AlmanacManager : MonoBehaviour
         this.almanacBody.GetComponent<SpriteRenderer>().color = new Color(0.2823529f, 0.7346016f, 0.8666667f);
         foreach (var element in this.almanac.Mission)
         {
-            element.Element.SetActive(true);
+            //element.ElementAsGameObject.SetActive(true);
         }
     }
     void HideAllElements()
     {
         foreach (var element in this.almanac.Collection)
         {
-            element.Element.SetActive(false);
+            //element.ElementAsGameObject.SetActive(false);
         }
         foreach (var element in this.almanac.Tutorial)
         {
-            element.Element.SetActive(false);
+            //element.ElementAsGameObject.SetActive(false);
         }
         foreach (var element in this.almanac.Mission)
         {
-            element.Element.SetActive(false);
+            //element.ElementAsGameObject.SetActive(false);
         }
     }
 

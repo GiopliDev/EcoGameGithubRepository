@@ -3,21 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CollectionElement
+public class CollectionElement : AbstractElement
 {
-    public string ID { get; set; }
     /// <summary>
     /// Indirizzo immagine dell'elemento
     /// </summary>
     public string Image { get; set; }
-    /// <summary>
-    /// Informazioni dell'elemento
-    /// </summary>
-    public string Info { get; set; }
-    /// <summary>
-    /// Nome dell'elemento
-    /// </summary>
-    public string Name { get; set; }
     /// <summary>
     /// Sezione dove è collocato l'elemento
     /// </summary>
@@ -26,9 +17,23 @@ public class CollectionElement
     /// E' stato sbloccato?
     /// </summary>
     public bool Unlocked { get; set; }
-    public GameObject Element { get; set; }
     public override string ToString()
     {
-        return $"ID: {ID}, Image: {Image}, Info: {Info}, Name: {Name}, Section: {Section}, Unlocked: {Unlocked}";
+        return $"";
     }
+#nullable enable
+    public override object ToDeserializedJSON()
+    {
+        return new Dictionary<string, object?>()
+        {
+            { nameof(this.Info), this.Info },
+            { nameof(this.Requires), this.Requires },
+            { nameof(this.Title), this.Title },
+         
+            { nameof(this.Section), this.Section },
+            { nameof(this.Image), this.Image },
+            { nameof(this.Unlocked), this.Unlocked }
+        };
+    }
+#nullable restore
 }

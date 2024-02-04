@@ -14,31 +14,16 @@ public class Almanac
         Vector2 size = new(fatherWidth / 8, 15);
         for (int i = 0; i < this.Collection.Length; i++)
         {
-            this.Collection[i].Element = AlmanacHelper.CreateGameObject(
-                nameof(this.Collection), 
-                this.Collection[i].Name, 
-                size, 
-                father, 
-                i);
+            // this.Collection[i].ElementAsGameObject = GETPREFAB
         }
         size.x = fatherWidth;
         for (int i = 0; i < this.Tutorial.Length; i++)
         {
-            this.Tutorial[i].Element = AlmanacHelper.CreateGameObject(
-                nameof(this.Tutorial), 
-                this.Tutorial[i].Title, 
-                size, 
-                father,
-                i);
+            // this.Tutorial[i].ElementAsGameObject =  GETPREFAB 
         }
         for (int i = 0; i < this.Mission.Length; i++)
         {
-            this.Mission[i].Element = AlmanacHelper.CreateGameObject(
-                nameof(this.Mission), 
-                this.Mission[i].Title, 
-                size,
-                father,
-                i);
+            // this.Mission[i].ElementAsGameObject = GETPREFAB
         }
     }
     public override string ToString()
