@@ -25,11 +25,7 @@ public class NPC : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G) && playerIsClose)
         {
-            if (dialoguePanel.activeInHierarchy)
-            {
-                zeroText();
-            }
-            else 
+            if (!dialoguePanel.activeInHierarchy)
             {
                 dialoguePanel.SetActive(true);
                 StartCoroutine(Typing());
@@ -53,8 +49,11 @@ public class NPC : MonoBehaviour
 
         foreach (char letter in dialogue[index].ToCharArray()) 
         {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
+            if (playerIsClose)
+            {
+                dialogueText.text += letter;
+                yield return new WaitForSeconds(wordSpeed);
+            }      
         }
     }
 
