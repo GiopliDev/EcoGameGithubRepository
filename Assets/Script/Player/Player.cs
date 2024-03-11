@@ -97,25 +97,29 @@ public class Player : MonoBehaviour
     private void pickUpManager()
     {
         //e non ho niente in mano
-        if (hasObjectInHand == false)
+        
+        if (hasObjectInHand == false&&isColliding)
         {
-            //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
-            if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable && isColliding)
+            if (lastCollision.gameObject.name == "Vase")
             {
-                hasObjectInHand = true;
+                //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
+                if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable)
+                {
+                    hasObjectInHand = true;
 
-                //assegno l'oggetto che ho in mano
-                objectInHand = lastCollision.gameObject;
-                
+                    //assegno l'oggetto che ho in mano
+                    objectInHand = lastCollision.gameObject;
 
-                objectInHand.GetComponent<sceneObjectManager>().objectPicked();
 
+                    objectInHand.GetComponent<sceneObjectManager>().objectPicked();
+
+                }
             }
         }
         else //quando ho premuto E,se avevo gia qualcosa in mano
         {
 
-            if (objectInHand.GetComponent<sceneObjectManager>().releaseObject())
+            if (objectInHand!=null&&objectInHand.GetComponent<sceneObjectManager>().releaseObject())
             {
                 hasObjectInHand = false;
             }

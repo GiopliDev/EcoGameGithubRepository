@@ -7,9 +7,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-
-
-
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
@@ -32,7 +29,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if (image != null)
         {
-            image.sprite = newItem.image;
+            image.sprite = newItem.sprite;
         }
         else
         {
@@ -41,7 +38,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             
             if (image != null)
             {
-                image.sprite = newItem.image;
+                image.sprite = newItem.sprite;
             }
             else
             {

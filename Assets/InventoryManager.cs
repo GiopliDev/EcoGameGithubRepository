@@ -4,6 +4,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] InventorySlots;
+    public InventorySlot[] craftingSlots;
     public GameObject InventoryItemPrefab;
     int SelectedSlot=-1;
 
@@ -39,13 +40,17 @@ public class InventoryManager : MonoBehaviour
         {
             InventorySlot slot = InventorySlots[i];
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+            InventorySlot slotCraft = craftingSlots[i];
+            InventoryItem itemSlotCraft = slotCraft.GetComponentInChildren<InventoryItem>();
             if (itemSlot != null &&
                 itemSlot.item ==item &&
-                itemSlot.count<4){
+                itemSlot.count<4
+                ){
                 itemSlot.count++;
+                itemSlotCraft.count++;
                 itemSlot.RefreshCount();
-                
-                
+                itemSlotCraft.RefreshCount();
+
                 return true;
             }
         }
@@ -55,8 +60,10 @@ public class InventoryManager : MonoBehaviour
         {
             InventorySlot slot = InventorySlots[i];
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+            InventorySlot slotCraft = craftingSlots[i];
             if (itemSlot == null)
             {
+                SpawnItem(item, slotCraft);
                 SpawnItem(item, slot);
                 return true;
             }
@@ -69,6 +76,7 @@ public class InventoryManager : MonoBehaviour
         GameObject newItemGO = Instantiate(InventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(item);
+        slot.item = item;
         
     }
 }

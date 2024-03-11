@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76d88d2648022424185fba0c11efb1a5, type: 3}
-  m_Name: Sasso
+  m_Name: TheRock
   m_EditorClassIdentifier: 
-  type: 1
-  actionType: 1
+  type: 0
+  actionType: 0
   tile: {fileID: 0}
-  range: {x: 1, y: 4}
+  range: {x: 5, y: 4}
   stackable: 1
-  sprite: {fileID: 21300000, guid: f9b7a7a690e5ea840937bea7a15c4b2e, type: 3}
-  itemName: Rock
+  sprite: {fileID: 21300000, guid: 66a02ff467758aa44b24ca14bf580af2, type: 3}
+  itemName: TheRock

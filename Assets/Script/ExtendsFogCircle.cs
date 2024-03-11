@@ -81,6 +81,5 @@ public class ExtendsFogCircle : MonoBehaviour
 
     private void expandFogCircle()
     {
-       fog.geta
     }    
 }
