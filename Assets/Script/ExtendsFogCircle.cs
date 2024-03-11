@@ -17,7 +17,7 @@ public class ExtendsFogCircle : MonoBehaviour
 
     public bool playerIsClose;
     public float wordSpeed;
-    public VisualEffectAsset fog;
+    public VisualEffect fog;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class ExtendsFogCircle : MonoBehaviour
         {
             if(dialoguePanel.activeInHierarchy)
             {
+                expandFogCircle();
                 dialoguePanel.SetActive(false);
                 dialogueText.text = "";
                 index = 0;
@@ -81,5 +82,6 @@ public class ExtendsFogCircle : MonoBehaviour
 
     private void expandFogCircle()
     {
+        fog.SetFloat("CircleSize", fog.GetFloat("CircleSize") +2);
     }    
 }

@@ -17,5 +17,5 @@ MonoBehaviour:
   tile: {fileID: 0}
   range: {x: 5, y: 4}
   stackable: 1
-  sprite: {fileID: 21300000, guid: 66a02ff467758aa44b24ca14bf580af2, type: 3}
+  sprite: {fileID: 21300000, guid: 16380c79eb9d02f438c740d68483d3ae, type: 3}
   itemName: TheRock
