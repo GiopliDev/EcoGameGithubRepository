@@ -82,6 +82,6 @@ public class ExtendsFogCircle : MonoBehaviour
 
     private void expandFogCircle()
     {
-        fog.SetFloat("CircleSize", fog.GetFloat("CircleSize") +2);
+        fog.SetFloat("CircleSize", fog.GetFloat("CircleSize")+2);
     }    
 }
