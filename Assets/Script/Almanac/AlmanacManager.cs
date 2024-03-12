@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AlmanacManager : MonoBehaviour
@@ -9,20 +10,23 @@ public class AlmanacManager : MonoBehaviour
 
     public const string JSON_DIR = "./Assets/almanac.json";
     public bool isShown = false;
-
+    
     void Start()
     {
         string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
-        this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
 
+        this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
         this.playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        this.almanacContainer = GameObject.Find("Almanac");
-        this.almanacTabs = GameObject.Find("AlmanacTabs");
-        this.almanacBody = GameObject.Find("AlmanacBody");
-        this.almanacCollection = GameObject.Find("AlmanacCollection");
-        this.almanacDescription = GameObject.Find("AlmanacDescription");
+        this.almanacContainer = this.gameObject;
+        var tmp = GetAllGameObjectChildren(this.almanacContainer);
+        this.almanacTabs = tmp["AlmanacTabs"];
+        this.almanacBody = tmp["AlmanacBody"];
         
-        this.almanacContainer.transform.position = new Vector3(0, 0, -9);
+        tmp = GetAllGameObjectChildren(this.almanacBody);
+        this.almanacContainer = tmp["AlmanacContainer"];
+        this.almanacDescription = tmp["AlmanacDescription"];
+
+        //this.almanacContainer.transform.position = new Vector3(0, 0, -9);
         this.almanac.CreateGameObjects(this.almanacCollection);
         this.CollectionTabSelected();
         this.HideAlmanac();
@@ -30,19 +34,25 @@ public class AlmanacManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (isShown) this.HideAlmanac();
-            else this.ShowAlmanac();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && this.isShown) this.HideAlmanac();
+        //ToggleAlmanac();  => Moved to Player::Update
     }
+    private Dictionary<string, GameObject> GetAllGameObjectChildren(GameObject parent)
+    {
+        Dictionary<string, GameObject> values = new();
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            GameObject val = parent.transform.GetChild(i).gameObject;
+            values.Add(val.name, val);
+        }
+        return values;
+    } 
     public void ShowAlmanac()
     {
+        this.almanacContainer.SetActive(true);
+        this.almanacTabs.SetActive(true);
+        this.almanacBody.SetActive(true);
         this.isShown = true;
         this.playerMV.canMove = false;
-        this.almanacBody.SetActive(true);
-        this.almanacTabs.SetActive(true);
         this.CollectionTabSelected();
     }
     public void HideAlmanac()
@@ -52,6 +62,15 @@ public class AlmanacManager : MonoBehaviour
         this.HideAllElements();
         this.almanacBody.SetActive(false);
         this.almanacTabs.SetActive(false);
+        this.almanacContainer.SetActive(false);
+    }
+    /// <summary>
+    /// If isShown it hides, otherwise it shows
+    /// </summary>
+    public void ToggleAlmanac()
+    {
+        if (isShown) this.HideAlmanac();
+        else this.ShowAlmanac();
     }
     public void CollectionTabSelected()
     {
