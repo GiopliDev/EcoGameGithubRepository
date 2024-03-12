@@ -5798,6 +5798,7 @@ GameObject:
   - component: {fileID: 657739255}
   - component: {fileID: 657739254}
   - component: {fileID: 657739253}
+  - component: {fileID: 657739256}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Pickable
@@ -5814,7 +5815,7 @@ Transform:
   m_GameObject: {fileID: 657739251}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.78, y: -2.65, z: 0}
+  m_LocalPosition: {x: -9.76, y: -3.01, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5833,9 +5834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f029a3876d78188408ca80856c2aba66, type: 2}
-  lastCollision: {fileID: 0}
-  isColliding: 0
   inventoryManager: {fileID: 1086029857}
+  moveSpeed: 5
 --- !u!58 &657739254
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5870,7 +5870,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.35
 --- !u!212 &657739255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5923,6 +5923,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &657739256
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657739251}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1001 &659722092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6668,7 +6703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &742471426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14619,6 +14654,7 @@ GameObject:
   - component: {fileID: 1286101812}
   - component: {fileID: 1286101811}
   - component: {fileID: 1286101810}
+  - component: {fileID: 1286101813}
   m_Layer: 0
   m_Name: Seed
   m_TagString: Pickable
@@ -14635,7 +14671,7 @@ Transform:
   m_GameObject: {fileID: 1286101808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.35, y: -3.5, z: 0}
+  m_LocalPosition: {x: -11.09, y: -4.49, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14654,9 +14690,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fe671fcaf9907164dbe8c477bf240b6e, type: 2}
-  lastCollision: {fileID: 0}
-  isColliding: 0
   inventoryManager: {fileID: 1086029857}
+  moveSpeed: 5
 --- !u!58 &1286101811
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14691,7 +14726,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.35
 --- !u!212 &1286101812
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14744,6 +14779,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1286101813
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286101808}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1 &1286629339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3843204866409021419, guid: 85a4fac8752cc89489a9b18b80c6597e, type: 3}
@@ -20134,6 +20204,7 @@ GameObject:
   - component: {fileID: 1979380398}
   - component: {fileID: 1979380397}
   - component: {fileID: 1979380396}
+  - component: {fileID: 1979380399}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Pickable
@@ -20150,7 +20221,7 @@ Transform:
   m_GameObject: {fileID: 1979380394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.53, y: -4.744, z: 0}
+  m_LocalPosition: {x: -7.6, y: -4.51, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20169,9 +20240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3f60fa83c652ccc4898b91625ae941bc, type: 2}
-  lastCollision: {fileID: 0}
-  isColliding: 0
   inventoryManager: {fileID: 1086029857}
+  moveSpeed: 5
 --- !u!58 &1979380397
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20206,7 +20276,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.35
 --- !u!212 &1979380398
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20259,6 +20329,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1979380399
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979380394}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1 &1979702062
 GameObject:
   m_ObjectHideFlags: 0
