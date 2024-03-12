@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     [Header("Player Bars")]
     public GameObject healthBar;
+    public GameObject almanac;
 
     [Header("Main Tools")]
     private int toolNumber = 3;
@@ -33,18 +34,18 @@ public class Player : MonoBehaviour
     public GameObject[] tools;
     public int equippedToolId = -1;
 
+    private float whenLastHit = 0f;
     void Start()
     {
-        lastCollision = new Collider2D();
         hp = maxHp;
         healthBar = GameObject.Find("HealthBar");
-        healthBar.GetComponent<Slider>().maxValue = maxHp;
-        healthBar.GetComponent<Slider>().value = maxHp;
+        RefreshBars();
         lastCollision = this.GetComponent<Collider2D>();
         tools = new GameObject[toolNumber];
         tools[0] = GameObject.Find("WateringCan");
         tools[1] = GameObject.Find("Hoe");
         tools[2] = GameObject.Find("Shovel");
+        almanac.SetActive(true);
     }
 
     // Update is called once per frame
@@ -57,7 +58,6 @@ public class Player : MonoBehaviour
         //se premo E
         if (Input.GetKeyDown(KeyCode.E))
         {
-
             pickUpManager();
         }
         if (Input.GetKeyDown(KeyCode.X))
@@ -84,24 +84,32 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (map.mapOpened == false)
-            {
-                map.openMap();
-            }
-            else
+            if (map.mapOpened == true)
             {
                 map.closeMap();
             }
+            else
+            {
+                map.openMap();
+            }
         }
-         
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            almanac.GetComponent<AlmanacManager>().ToggleAlmanac();
+        }
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            almanac.GetComponent<AlmanacManager>().HideAlmanac();
+        }
     }
     private void pickUpManager()
     {
         //e non ho niente in mano
         if (hasObjectInHand == false && isColliding)
         {
-            if (lastCollision.gameObject.name == "Vase")
+            if (lastCollision.gameObject.name == "Vase")//E' necessario??
             {
                 //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
                 if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable)
@@ -111,28 +119,26 @@ public class Player : MonoBehaviour
                     //assegno l'oggetto che ho in mano
                     objectInHand = lastCollision.gameObject;
 
-
                     objectInHand.GetComponent<sceneObjectManager>().objectPicked();
-
                 }
             }
         }
         else //quando ho premuto E,se avevo gia qualcosa in mano
         {
-                    hasObjectInHand = false;
+            hasObjectInHand = false;
         }
     }
-    public void plant() 
+    public void plant()
     {
         //controlla se l'ultimo oggetto al quale si è avvicinato è un vaso
-        if (lastCollision.GetComponent<sceneObjectManager>().isPlantable && isColliding)
+        if (isColliding && lastCollision.GetComponent<sceneObjectManager>().isPlantable)
         {
             Debug.Log("Entraaaa!!");
             //controlla se non è già stato piantato e se sta collidendo
-            if ( lastCollision.gameObject.name=="Vase")
+            if (lastCollision.gameObject.name == "Vase")
             {
                 //sposta il seme che ho in mano sulla pianta
-                objectInHand.transform.position=lastCollision.GetComponentInChildren<Transform>().position;
+                objectInHand.transform.position = lastCollision.GetComponentInChildren<Transform>().position;
                 //il seme inizia a crescere
                 Debug.Log(lastCollision.name + " vuole crescere");
                 objectInHand.GetComponent<Pianta>().startGrowth();
@@ -171,7 +177,7 @@ public class Player : MonoBehaviour
 
         //questa condizione serve per settare gli oggetti di scena appena la funzione ha deciso cosa deve
         //avere in mano il player
-        if (equippedToolId > -1) 
+        if (equippedToolId > -1)
         {
             objectInHand = tools[equippedToolId];
             objectInHand.GetComponent<SpriteRenderer>().enabled = true;
@@ -179,10 +185,38 @@ public class Player : MonoBehaviour
             Debug.Log(objectInHand.name + " equipaggiato");
         }
     }
+
+    void RefreshBars()
+    {
+        Slider bar = healthBar.GetComponent<Slider>();
+        bar.maxValue = maxHp;
+        bar.value = hp;
+    }
+
+    private void CheckEnemy(Collision2D coll)
+    {
+        if (coll.gameObject.tag != "Enemy") return;
+        if (this.whenLastHit + 1f > Time.realtimeSinceStartup) return;
+        this.whenLastHit = Time.realtimeSinceStartup;
+        this.hp -= 1; // HEALTH TO BE REDUCED BY SOME CONSTANT OTHERWHERE
+        this.RefreshBars();
+        if (this.hp <= 0)
+        {
+            Debug.Log("Player is dead (Player::OnCollisionEnter2D)");
+        }
+
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         isColliding = true;
         lastCollision = collision.collider;
+        CheckEnemy(collision);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        CheckEnemy(collision);
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
