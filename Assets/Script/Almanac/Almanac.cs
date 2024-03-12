@@ -6,7 +6,7 @@ public class Almanac
     public MissionInfoElement[] Mission { get; set; }
 
     public void CreateGameObjects(GameObject father)
-    {
+    {/*
         //La funzione nameof() prende sempre il nome del parametro, in questo caso Collection
         //Torna utile per dare un errore se è stato cambiato il nome
         Bounds b = father.GetComponent<BoxCollider2D>().bounds;
@@ -24,7 +24,7 @@ public class Almanac
         for (int i = 0; i < this.Mission.Length; i++)
         {
             // this.Mission[i].ElementAsGameObject = GETPREFAB
-        }
+        }*/
     }
     public override string ToString()
     {
