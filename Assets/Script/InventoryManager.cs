@@ -5,6 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] InventorySlots;
     public InventorySlot[] craftingSlots;
+    public InventorySlot[] purifierSlots;
     public GameObject InventoryItemPrefab;
     int SelectedSlot=-1;
 
@@ -42,15 +43,18 @@ public class InventoryManager : MonoBehaviour
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
             InventorySlot slotCraft = craftingSlots[i];
             InventoryItem itemSlotCraft = slotCraft.GetComponentInChildren<InventoryItem>();
+            InventorySlot slotPurifier = purifierSlots[i];
+            InventoryItem itemSlotPurifier = slotPurifier.GetComponentInChildren<InventoryItem>();
             if (itemSlot != null &&
                 itemSlot.item ==item &&
                 itemSlot.count<4
                 ){
                 itemSlot.count++;
                 itemSlotCraft.count++;
+                itemSlotPurifier.count++;
                 itemSlot.RefreshCount();
                 itemSlotCraft.RefreshCount();
-
+                itemSlotPurifier.RefreshCount();
                 return true;
             }
         }
@@ -61,8 +65,10 @@ public class InventoryManager : MonoBehaviour
             InventorySlot slot = InventorySlots[i];
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
             InventorySlot slotCraft = craftingSlots[i];
+            InventorySlot slotPurifier = purifierSlots[i];
             if (itemSlot == null)
             {
+                SpawnItem(item, slotPurifier);
                 SpawnItem(item, slotCraft);
                 SpawnItem(item, slot);
                 return true;

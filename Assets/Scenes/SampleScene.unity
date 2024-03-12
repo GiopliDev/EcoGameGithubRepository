@@ -5603,6 +5603,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f029a3876d78188408ca80856c2aba66, type: 2}
+  lastCollision: {fileID: 0}
+  isColliding: 0
+  inventoryManager: {fileID: 1086029857}
 --- !u!58 &657739254
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5632,7 +5635,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -10847,7 +10850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &944230632
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12362,6 +12365,31 @@ MonoBehaviour:
   - {fileID: 1115908712}
   - {fileID: 832085161}
   - {fileID: 917699304}
+  purifierSlots:
+  - {fileID: 860110554}
+  - {fileID: 622676077}
+  - {fileID: 179163299}
+  - {fileID: 2004469201}
+  - {fileID: 1827695759}
+  - {fileID: 88584868}
+  - {fileID: 1848112528}
+  - {fileID: 253328183}
+  - {fileID: 10369539}
+  - {fileID: 1691537133}
+  - {fileID: 1572611881}
+  - {fileID: 843561457}
+  - {fileID: 1735888084}
+  - {fileID: 1075774902}
+  - {fileID: 1959572503}
+  - {fileID: 818461157}
+  - {fileID: 1098368505}
+  - {fileID: 857794793}
+  - {fileID: 65185190}
+  - {fileID: 502972789}
+  - {fileID: 1664961681}
+  - {fileID: 1530394825}
+  - {fileID: 1246402962}
+  - {fileID: 1069035574}
   InventoryItemPrefab: {fileID: 3027898101217804991, guid: 497c33ca14f749941852adafc4c30d70, type: 3}
 --- !u!4 &1086029858
 Transform:
@@ -13340,7 +13368,6 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   tools: []
   equippedToolId: -1
-  inventoryManager: {fileID: 1086029857}
 --- !u!4 &1202467878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6982732763490215265, guid: d11ea7a667618174183bc8aa5f2fb397, type: 3}
@@ -14116,6 +14143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fe671fcaf9907164dbe8c477bf240b6e, type: 2}
+  lastCollision: {fileID: 0}
+  isColliding: 0
+  inventoryManager: {fileID: 1086029857}
 --- !u!58 &1286101811
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14145,7 +14175,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -17478,6 +17508,8 @@ GameObject:
   - component: {fileID: 1745763693}
   - component: {fileID: 1745763692}
   - component: {fileID: 1745763691}
+  - component: {fileID: 1745763695}
+  - component: {fileID: 1745763694}
   m_Layer: 0
   m_Name: Purifier
   m_TagString: Untagged
@@ -17497,7 +17529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afa86fba2f710a4b8d031c7fc81e32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purifierPanel: {fileID: 0}
+  purifierPanel: {fileID: 944230631}
   playerIsClose: 0
 --- !u!212 &1745763692
 SpriteRenderer:
@@ -17566,6 +17598,96 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1745763694
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745763690}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.008756459, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0175123, y: 1.0208973}
+  m_EdgeRadius: 0
+--- !u!61 &1745763695
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745763690}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.008756608, y: 0.0052244663}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.8580935, y: 1.5328844}
+  m_EdgeRadius: 0
 --- !u!114 &1762087433 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4710583448283940431, guid: 85a4fac8752cc89489a9b18b80c6597e, type: 3}
@@ -19368,6 +19490,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3f60fa83c652ccc4898b91625ae941bc, type: 2}
+  lastCollision: {fileID: 0}
+  isColliding: 0
+  inventoryManager: {fileID: 1086029857}
 --- !u!58 &1979380397
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19397,7 +19522,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

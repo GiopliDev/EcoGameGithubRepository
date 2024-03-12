@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
     public GameObject[] tools;
     public int equippedToolId = -1;
 
-    public InventoryManager inventoryManager;
     void Start()
     {
         lastCollision = new Collider2D();
@@ -98,18 +97,6 @@ public class Player : MonoBehaviour
     private void pickUpManager()
     {
         //e non ho niente in mano
-        if (isColliding)
-        {
-            if (lastCollision.gameObject.tag == "Pickable") {
-                GameObject cgb = lastCollision.gameObject;
-                if(cgb.GetComponent<PickableItem>() != null)
-                {
-                    Item item = cgb.GetComponent<PickableItem>().item;
-                    inventoryManager.AddItem(item);
-                }
-            }
-            
-        }
         if (hasObjectInHand == false && isColliding)
         {
             if (lastCollision.gameObject.name == "Vase")
@@ -200,7 +187,6 @@ public class Player : MonoBehaviour
         isColliding = true;
         lastCollision = collision.collider;
     }
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         isColliding = false;
