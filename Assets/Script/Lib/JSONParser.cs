@@ -155,7 +155,7 @@ internal static class JSONParser_DecomposeJSON
         value = value.Trim();
         if (value == "null") return null;
         if (value == "true" || value == "false") return value == "true";
-        if (value.StartsWith('"') && value.EndsWith('"')) return value;
+        if (value.StartsWith('"') && value.EndsWith('"')) return value.Substring(1, value.Length - 2);
         if (value.StartsWith('$')) return objectsID[int.Parse(value.Substring(1))];
         if (value.StartsWith('@')) return arraysID[int.Parse(value.Substring(1))];
         if (byte.TryParse(value, out byte byteVal)) return byteVal;
