@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
     [Header("Main Tools")]
     private int toolNumber = 3;
+    public int water = 100;
     public GameObject[] tools;
     public int equippedToolId = -1;
 
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
         //se premo E
         if (Input.GetKeyDown(KeyCode.E))
         {
+
             pickUpManager();
         }
         if (Input.GetKeyDown(KeyCode.X))
@@ -130,12 +132,7 @@ public class Player : MonoBehaviour
         }
         else //quando ho premuto E,se avevo gia qualcosa in mano
         {
-
-            if (objectInHand != null && objectInHand.GetComponent<sceneObjectManager>().releaseObject())
-            {
-                hasObjectInHand = false;
-            }
-
+                    hasObjectInHand = false;
         }
     }
     public void plant() 
