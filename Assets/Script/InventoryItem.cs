@@ -52,16 +52,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     
     public void RefreshCount() {
         countText = GetComponentInChildren<Text>();
-
-        if (countText != null)
+        if (count != 0)
         {
             countText.text = count.ToString();
         }
-        else
-        {
-            Debug.LogError("countText component is null. Make sure it is properly assigned or present on the same GameObject.");
+        else {
+            Destroy(this.gameObject);
         }
-        countText.text = count.ToString();
     }
 
 

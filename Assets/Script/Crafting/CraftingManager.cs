@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ public class CraftingManager : MonoBehaviour
     public string[] recipes;
     public Item[] recipesResults;
     public Slot resultSlot;
+    public InventoryManager inventoryManager;
+    
 
     private void Update()
     {
@@ -32,8 +35,7 @@ public class CraftingManager : MonoBehaviour
                     var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mouseWorldPos.z = 0f;
                     float dist=Vector3.Distance(mouseWorldPos, slot.transform.position);
-                    Debug.Log(dist);
-                    if (dist < shortestDistance) 
+                    if (dist < shortestDistance && slot.item==null) 
                     { 
                         shortestDistance = dist;
                         nearestSlot = slot;
@@ -41,10 +43,16 @@ public class CraftingManager : MonoBehaviour
                     }
                     
                 }
-                nearestSlot.gameObject.SetActive(true);
-                nearestSlot.GetComponent<Image>().sprite = currentItem.sprite;
-                nearestSlot.item = currentItem;
-                itemList[nearestSlot.index] = currentItem;
+                if (nearestSlot != null)
+                {
+                    nearestSlot.gameObject.SetActive(true);
+                    nearestSlot.GetComponent<Image>().sprite = currentItem.sprite;
+                    nearestSlot.item = currentItem;
+                    itemList[nearestSlot.index] = currentItem;
+                }
+                else {
+                    
+                }
 
                 currentItem = null;
 
@@ -77,19 +85,24 @@ public class CraftingManager : MonoBehaviour
 
     public void OnClickSlot(Slot slot)
     {
-        slot.item = null;
-        itemList[slot.index] = null;
-        slot.gameObject.SetActive(false);
-        CheckForCreatedRecipes();
-
+        
+            inventoryManager.AddItem(slot.item);
+            slot.item = null;
+            itemList[slot.index] = null;
+            slot.gameObject.SetActive(false);
+            CheckForCreatedRecipes();
+        
     }
+
     public void onMouseDownItem(InventorySlot slot) 
     {
         Item item = slot.item;
-        if (currentItem == null) {
+        Debug.Log(slot.item);
+        if (currentItem == null && slot.item!=null) {
             currentItem = item;
             customCursor.gameObject.SetActive(true);
             customCursor.sprite = currentItem.sprite;
+            inventoryManager.ToggleItem(slot.item);
         }
     }
 }

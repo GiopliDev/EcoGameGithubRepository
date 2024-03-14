@@ -6,7 +6,6 @@ using UnityEngine;
 public class PickableItem : MonoBehaviour
 {
     public Item item;
-
     public InventoryManager inventoryManager;
 
     public float moveSpeed; // Velocità di movimento dell'oggetto

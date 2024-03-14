@@ -22,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     {
         ChangeSelectedSlot(0);
     }
+
     public void Update()
     {
         if (Input.inputString!=null) {
@@ -84,5 +85,38 @@ public class InventoryManager : MonoBehaviour
         inventoryItem.InitializeItem(item);
         slot.item = item;
         
+    }
+    
+    public bool ToggleItem(Item item)
+    {
+        for (int i = 0; i < InventorySlots.Length; i++)
+        {
+            InventorySlot slot = InventorySlots[i];
+            InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+            InventorySlot slotCraft = craftingSlots[i];
+            InventoryItem itemSlotCraft = slotCraft.GetComponentInChildren<InventoryItem>();
+            InventorySlot slotPurifier = purifierSlots[i];
+            InventoryItem itemSlotPurifier = slotPurifier.GetComponentInChildren<InventoryItem>();
+            if (itemSlot != null &&
+                itemSlot.item == item &&
+                itemSlot.count > 0
+                )
+            {
+                itemSlot.count--;
+                itemSlotCraft.count--;
+                itemSlotPurifier.count--;
+                if (itemSlot.count == 0)
+                {
+                    slot.item = null;
+                    slotCraft.item = null;
+                    slotPurifier.item = null;
+                }
+                itemSlot.RefreshCount();
+                itemSlotCraft.RefreshCount();
+                itemSlotPurifier.RefreshCount();
+                return true;
+            }
+        }
+        return false;
     }
 }

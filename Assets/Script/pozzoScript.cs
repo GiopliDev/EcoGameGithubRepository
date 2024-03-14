@@ -9,6 +9,9 @@ public class pozzoScript : MonoBehaviour
     public bool isColliding = false;
     public Collider2D lastCollision;
     public TMP_Text lblWater;
+
+    private float whenLastGet = 0f;
+
     void Start()
     {
         
@@ -22,10 +25,14 @@ public class pozzoScript : MonoBehaviour
             Player script = lastCollision.gameObject.GetComponent<Player>();
             if (Input.GetKey(KeyCode.E))
             {
-                if (script.water + (int)(100 * Time.deltaTime) <= 100)
+                if(this.whenLastGet + 0.06f <= Time.realtimeSinceStartup)
                 {
-                    script.water += (int)(100*Time.deltaTime);
-                    lblWater.text = script.water + "%";
+                    this.whenLastGet = Time.realtimeSinceStartup;
+                    if (script.water < 100)
+                    {
+                        script.water += 1;
+                        lblWater.text = script.water + "%";
+                    }
                 }
             }
         }
