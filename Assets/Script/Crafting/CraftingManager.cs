@@ -18,7 +18,7 @@ public class CraftingManager : MonoBehaviour
     public Item[] recipesResults;
     public Slot resultSlot;
     public InventoryManager inventoryManager;
-    
+    public int countSlot;
 
     private void Update()
     {
@@ -49,9 +49,6 @@ public class CraftingManager : MonoBehaviour
                     nearestSlot.GetComponent<Image>().sprite = currentItem.sprite;
                     nearestSlot.item = currentItem;
                     itemList[nearestSlot.index] = currentItem;
-                }
-                else {
-                    
                 }
 
                 currentItem = null;
@@ -85,12 +82,12 @@ public class CraftingManager : MonoBehaviour
 
     public void OnClickSlot(Slot slot)
     {
-        
-            inventoryManager.AddItem(slot.item);
-            slot.item = null;
-            itemList[slot.index] = null;
-            slot.gameObject.SetActive(false);
-            CheckForCreatedRecipes();
+        countSlot--;
+        inventoryManager.AddItem(slot.item);
+        slot.item = null;
+        itemList[slot.index] = null;
+        slot.gameObject.SetActive(false);
+        CheckForCreatedRecipes();
         
     }
 
@@ -98,8 +95,9 @@ public class CraftingManager : MonoBehaviour
     {
         Item item = slot.item;
         Debug.Log(slot.item);
-        if (currentItem == null && slot.item!=null) {
+        if (currentItem == null && slot.item!=null && countSlot!=9) {
             currentItem = item;
+            countSlot++;
             customCursor.gameObject.SetActive(true);
             customCursor.sprite = currentItem.sprite;
             inventoryManager.ToggleItem(slot.item);
