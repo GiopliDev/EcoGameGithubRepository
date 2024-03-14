@@ -10,14 +10,15 @@ public class AlmanacManager : MonoBehaviour
 
     public const string JSON_DIR = "./Assets/almanac.json";
     public bool isShown = false;
-    
+
     void Start()
     {
         string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
-
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
+
         this.playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
         this.almanacContainer = this.gameObject;
+        
         var tmp = GetAllGameObjectChildren(this.almanacContainer);
         this.almanacTabs = tmp["AlmanacTabs"];
         this.almanacBody = tmp["AlmanacBody"];

@@ -95,14 +95,17 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
+            almanac.transform.position = this.gameObject.transform.position;
             almanac.GetComponent<AlmanacManager>().ToggleAlmanac();
         }
-
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             almanac.GetComponent<AlmanacManager>().HideAlmanac();
         }
+        if(lastCollision != null && lastCollision.gameObject != null)
+            CheckEnemy(lastCollision.gameObject.tag);
+
     }
     private void pickUpManager()
     {
@@ -193,9 +196,9 @@ public class Player : MonoBehaviour
         bar.value = hp;
     }
 
-    private void CheckEnemy(Collision2D coll)
+    private void CheckEnemy(string tag)
     {
-        if (coll.gameObject.tag != "Enemy") return;
+        if (tag != "Enemy") return;
         if (this.whenLastHit + 1f > Time.realtimeSinceStartup) return;
         this.whenLastHit = Time.realtimeSinceStartup;
         this.hp -= 1; // HEALTH TO BE REDUCED BY SOME CONSTANT OTHERWHERE
@@ -211,12 +214,6 @@ public class Player : MonoBehaviour
     {
         isColliding = true;
         lastCollision = collision.collider;
-        CheckEnemy(collision);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        CheckEnemy(collision);
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
