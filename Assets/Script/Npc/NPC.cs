@@ -30,10 +30,10 @@ public class NPC : MonoBehaviour
                 dialoguePanel.SetActive(true);
                 StartCoroutine(Typing());
             }
-        }
-        if (dialogueText.text == dialogue[index]) 
-        { 
-            contButton.SetActive(true);
+            else
+            {
+                NextLine();
+            }
         }
     }
     public void zeroText() 
@@ -59,7 +59,6 @@ public class NPC : MonoBehaviour
 
     public void NextLine() 
     {
-        contButton.SetActive(false);
         if (index < dialogue.Length - 1)
         {
             index++;
