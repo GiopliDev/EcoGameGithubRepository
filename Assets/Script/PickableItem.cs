@@ -14,19 +14,18 @@ public class PickableItem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(MoveObject(collision.gameObject.transform.position));
+            StartCoroutine(MoveObject(collision));
         }
     }
 
-    IEnumerator MoveObject(Vector3 targetPosition)
+    IEnumerator MoveObject(Collider2D collision)
     {
-        float distance = Vector3.Distance(transform.position, targetPosition); // Calcola la distanza tra l'oggetto e la posizione del giocatore
         float step = moveSpeed * Time.deltaTime; // Calcola la quantità di movimento per frame
 
-        while (transform.position != targetPosition)
+        while (transform.position != collision.gameObject.transform.position)
         {
             // Sposta l'oggetto verso la posizione del giocatore in modo graduale
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+            transform.position = Vector3.MoveTowards(transform.position, collision.gameObject.transform.position, step);
             yield return null; // Attendere fino al prossimo frame
         }
     }

@@ -14,7 +14,7 @@ public class CraftingManager : MonoBehaviour
     public Slot[] craftingSlots;
 
     public List<Item> itemList;
-    public string[] recipes;
+    public Recipe[] recipes;
     public Item[] recipesResults;
     public Slot resultSlot;
     public InventoryManager inventoryManager;
@@ -72,9 +72,11 @@ public class CraftingManager : MonoBehaviour
             }
         }
         for (int i = 0; i < recipes.Length; i++) {
-            if (recipes[i] == currentRecipeString) { 
+            if (recipes[i].recipeText == currentRecipeString) { 
                 resultSlot.gameObject.SetActive(true);
                 resultSlot.GetComponent<Image>().sprite = recipesResults[i].sprite;
+                recipes[i].isThere = true;
+                //bisogna aggiungere lo slot alla parte delle ricette
                 resultSlot.item = recipesResults[i];
             }
         }
