@@ -43,6 +43,10 @@ public class ExtendsFogCircle : MonoBehaviour
                 StartCoroutine(Typing());
             }
         }
+        if (dialogueText.text == dialogue[index])
+        {
+            dialogueText.text += "\n" + "PREMI 'E' PER CONFERMARE";
+        }
     }
 
     IEnumerator Typing()
