@@ -63,7 +63,7 @@ public class AlmanacManager : MonoBehaviour
         this.HideAllElements();
         this.almanacBody.SetActive(false);
         this.almanacTabs.SetActive(false);
-        this.almanacContainer.SetActive(false);
+        this.almanacContainer.SetActive(false); 
     }
     /// <summary>
     /// If isShown it hides, otherwise it shows

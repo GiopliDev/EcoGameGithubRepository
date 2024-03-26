@@ -404,8 +404,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d28289e4714951498b0dba7dea3c1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whenEntered: 0
+  isTeleporting: 0
+  entity: {fileID: 0}
   teleportTo: {fileID: 0}
   timeToStartTeleport: 2
+  disableFog: 0
 --- !u!212 &23851285
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3610,8 +3614,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d28289e4714951498b0dba7dea3c1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whenEntered: 0
+  isTeleporting: 0
+  entity: {fileID: 0}
   teleportTo: {fileID: 23851283}
   timeToStartTeleport: 2
+  disableFog: 0
 --- !u!212 &417366674
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4022,7 +4030,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6949525103428900590, guid: a219fd016f19ea94690e96878362b434, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -17377,7 +17386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -333.49985, y: 186.69998}
+  m_AnchoredPosition: {x: -333.49988, y: 186.69998}
   m_SizeDelta: {x: -1852.9077, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704450494
