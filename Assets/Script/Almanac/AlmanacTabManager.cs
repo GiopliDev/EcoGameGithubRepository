@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class AlmanacTabManager : MonoBehaviour
 {
-    private static AlmanacManager almanac = null;
+    public AlmanacManager almanac;
     // Start is called before the first frame update
     void Start()
     {
-        if(almanac == null) almanac = GameObject.Find("Almanac").GetComponent<AlmanacManager>();
     }
 
     // Update is called once per frame
@@ -22,13 +21,13 @@ public class AlmanacTabManager : MonoBehaviour
         switch (this.name)
         {
             case "CollectionTab":
-                almanac.CollectionTabSelected();
+                almanac.Select("collection");
                 break;
             case "TutorialTab":
-                almanac.TutorialTabSelected();
+                almanac.Select("tutorial");
                 break;
             case "MissionTab":
-                almanac.MissionTabSelected();
+                almanac.Select("mission");
                 break;
             case "ExitAlmanac":
                 almanac.HideAlmanac();
