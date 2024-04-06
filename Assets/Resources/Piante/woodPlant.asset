@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b067c6a6eb649c943ad012edb9a4a669, type: 3}
+  m_Name: woodPlant
+  m_EditorClassIdentifier: 
+  nome: wood
+  fasi:
+  - {fileID: 21300000, guid: 66a02ff467758aa44b24ca14bf580af2, type: 3}
+  - {fileID: 21300000, guid: 28a48892abf8d1c4e9cd9ce4375cb75f, type: 3}
+  - {fileID: 21300000, guid: 52834521ec0025f4e8c20af727afba77, type: 3}
+  - {fileID: 21300000, guid: 7a6770647ec23c744a17db26b55c8079, type: 3}
+  IDCrescita: 0
+  progressNeeded: 20
+  progress: 0

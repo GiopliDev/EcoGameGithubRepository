@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     public GameObject[] tools;
     public int equippedToolId = -1;
 
+    [Header("Inventory Links")]
+    public InventoryManager inventoryManager;
+
     private float whenLastHit = 0f;
     void Start()
     {
@@ -58,7 +61,16 @@ public class Player : MonoBehaviour
         //se premo E
         if (Input.GetKeyDown(KeyCode.E))
         {
-            pickUpManager();
+            if (lastCollision.gameObject.tag == "SceneObject")
+            {
+                if (inventoryManager.InventorySlots[inventoryManager.SelectedSlot].item.type == ItemType.Seed)
+                {
+                    plant();
+                }
+                else {
+                    pickUpManager();
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -72,16 +84,7 @@ public class Player : MonoBehaviour
         {
             toggleTool(2); //pala
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (hasObjectInHand)
-            {
-                if (objectInHand.gameObject.name == "Seme")
-                {
-                    plant();//pianta
-                }
-            }
-        }
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (map.mapOpened == true)
@@ -109,8 +112,6 @@ public class Player : MonoBehaviour
         //e non ho niente in mano
         if (hasObjectInHand == false && isColliding)
         {
-            if (lastCollision.gameObject.name == "Vase")//E' necessario??
-            {
                 //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
                 if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable)
                 {
@@ -121,31 +122,18 @@ public class Player : MonoBehaviour
 
                     objectInHand.GetComponent<sceneObjectManager>().objectPicked();
                 }
-            }
         }
-        else //quando ho premuto E,se avevo gia qualcosa in mano
+        else if (objectInHand.tag == "SceneObject")
         {
-            hasObjectInHand = false;
+                hasObjectInHand = false;
+                objectInHand.GetComponent<sceneObjectManager>().releaseObject();
+                objectInHand = null;
         }
     }
     public void plant()
     {
-        //controlla se l'ultimo oggetto al quale si è avvicinato è un vaso
-        if (isColliding && lastCollision.GetComponent<sceneObjectManager>().isPlantable)
-        {
-            Debug.Log("Entraaaa!!");
-            //controlla se non è già stato piantato e se sta collidendo
-            if (lastCollision.gameObject.name == "Vase")
-            {
-                //sposta il seme che ho in mano sulla pianta
-                objectInHand.transform.position = lastCollision.GetComponentInChildren<Transform>().position;
-                //il seme inizia a crescere
-                Debug.Log(lastCollision.name + " vuole crescere");
-                objectInHand.GetComponent<Pianta>().startGrowth();
-                //viene eliminato ciò che ho in mano
-                hasObjectInHand = false;
-            }
-        }
+        Instantiate(Resources.Load("Piante/woodPlant"));
+        Debug.Log("Piantata");
     }
 
     public void toggleTool(int toolId) //N.B: il player deve avere la mano libera per prender in mano l'utensile 

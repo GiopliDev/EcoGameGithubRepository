@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] craftingSlots;
     public InventorySlot[] purifierSlots;
     public GameObject InventoryItemPrefab;
-    int SelectedSlot=-1;
+    public int SelectedSlot=-1;
 
     void ChangeSelectedSlot(int newValue) {
         if (SelectedSlot >= 0)
@@ -16,6 +16,7 @@ public class InventoryManager : MonoBehaviour
         }
         InventorySlots[newValue].Select();
         SelectedSlot = newValue;
+        Debug.Log("Slot Selezionato: " + SelectedSlot + ", Oggetto nello Slot: " + InventorySlots[SelectedSlot].item.itemName);
         
     }
     public void Start()
