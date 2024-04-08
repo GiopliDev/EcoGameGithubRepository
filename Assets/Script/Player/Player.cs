@@ -132,8 +132,9 @@ public class Player : MonoBehaviour
     }
     public void plant()
     {
-        Instantiate(Resources.Load("Piante/woodPlant"));
-        Debug.Log("Piantata");
+       Instantiate(Resources.Load("Piante/woodPlant"));
+       Debug.Log("Piantata");
+        
     }
 
     public void toggleTool(int toolId) //N.B: il player deve avere la mano libera per prender in mano l'utensile 

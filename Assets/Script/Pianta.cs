@@ -12,41 +12,7 @@ public class Pianta : ScriptableObject
     public string nome;
     public Sprite[] fasi = new Sprite[4]; //icona,fase1,fase2,fase3
     public int IDCrescita=0;
-    public int progressNeeded;
+    public float progressNeeded;
     public int progress;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    private void FixedUpdate()
-    {
-        //0.06 = 60 millisecondi
-        if (this.whenLastGet + 1f <= Time.realtimeSinceStartup)
-        {
-            this.whenLastGet = Time.realtimeSinceStartup;
-            if (progress < progressNeeded)
-            {
-                progress++;
-            }
-        }
-
-        if (progress == progressNeeded && IDCrescita < 3) //< 3 perche le fasi massime sono 4
-        {
-            IDCrescita++;
-            changePhase(IDCrescita);
-        }
-
-    }
-
-    public void changePhase(int fase)
-    {
-        this.GetComponent<SpriteRenderer>().sprite = fasi[fase];
-    }
-    public void startGrowth()
-    {
-        changePhase(0);
-    }
-
     
 }

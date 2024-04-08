@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
         }
         InventorySlots[newValue].Select();
         SelectedSlot = newValue;
-        Debug.Log("Slot Selezionato: " + SelectedSlot + ", Oggetto nello Slot: " + InventorySlots[SelectedSlot].item.itemName);
+        //Debug.Log("Slot Selezionato: " + SelectedSlot + ", Oggetto nello Slot: " + InventorySlots[SelectedSlot].item.itemName);
         
     }
     public void Start()
