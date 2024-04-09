@@ -36,4 +36,12 @@ public class CollectionElement : AbstractElement
         };
     }
 #nullable restore
+    public override GameObject GenerateGameObject(GameObject prefab)
+    {
+        this.ElementAsGameObject = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        //ADD DATA
+        Debug.Log("GameObject-Collection: " + this.Title);
+        this.ElementAsGameObject.transform.localScale = Vector3.one;
+        return this.ElementAsGameObject;
+    }
 }

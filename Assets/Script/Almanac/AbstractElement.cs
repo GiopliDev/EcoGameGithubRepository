@@ -41,4 +41,6 @@ public abstract class AbstractElement
     /// Rappresentazione di oggetto JSON
     /// </returns>
     public abstract object ToDeserializedJSON();
+
+    public abstract GameObject GenerateGameObject(GameObject prefab);
 }

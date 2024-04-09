@@ -23,4 +23,11 @@ public class TutorialInfoElement : AbstractElement
             { nameof(this.Image), this.Image }
         };
     }
+    public override GameObject GenerateGameObject(GameObject prefab)
+    {
+        this.ElementAsGameObject = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        //ADD DATA
+        Debug.Log("GameObject-Tutorial: " + this.Title);
+        return this.ElementAsGameObject;
+    }
 }

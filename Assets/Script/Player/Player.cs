@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -38,7 +36,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         hp = maxHp;
-        healthBar = GameObject.Find("HealthBar");
+        healthBar = GameObject.Find("HealthBar"); // ma se il parametro è pubblico, perché prenderlo così
         RefreshBars();
         lastCollision = this.GetComponent<Collider2D>();
         tools = new GameObject[toolNumber];
@@ -205,7 +203,7 @@ public class Player : MonoBehaviour
         this.RefreshBars();
         if (this.hp <= 0)
         {
-            Debug.Log("Player is dead (Player::OnCollisionEnter2D)");
+            Debug.Log("Player is dead (Player::CheckEnemy)");
         }
 
     }

@@ -34,5 +34,13 @@ public class MissionInfoElement : AbstractElement
             { nameof(this.IsCompleted), this.IsCompleted }
         };
     }
+
 #nullable restore
+    public override GameObject GenerateGameObject(GameObject prefab)
+    {
+        this.ElementAsGameObject = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        //ADD DATA
+        Debug.Log("GameObject-Mission: " + this.Title);
+        return this.ElementAsGameObject;
+    }
 }

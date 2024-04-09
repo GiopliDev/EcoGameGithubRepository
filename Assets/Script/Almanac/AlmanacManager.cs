@@ -1,38 +1,43 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AlmanacManager : MonoBehaviour
 {
     private PlayerMovement playerMV;
     private Almanac almanac;
-    
-    private GameObject canvas, almanacTabs, almanacBody;
+
+    private GameObject almanacTabs, almanacBody;
     private GameObject almanacDescription, almanacCollection;
 
     private AlmanacSection mission, tutorial, collection;
     private Dictionary<string, AlmanacSection> sections;
 
-    public const string JSON_DIR = "./Assets/almanac.json";
+    public string JSON_DIR = "./Assets/almanac.json";
     public bool isShown = false;
+    public GameObject smallCell;
+    public GameObject longCell;
 
     void Start()
     {
-        string JSON_DATA = System.IO.File.ReadAllText(JSON_DIR);
+        string JSON_DATA = File.ReadAllText(JSON_DIR);
         this.almanac = JSONParser.FromAsObject<Almanac>(JSON_DATA);
-
         this.playerMV = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        this.canvas = this.gameObject.transform.GetChild(0).gameObject;
-        
-        var tmp = GetAllGameObjectChildren(this.canvas);
+
+        // Genera prefab per l'almanacco dal json
+        this.almanac.CreateGameObjects(this.almanacCollection, this.smallCell, this.longCell);
+
+        var tmp = GetAllGameObjectChildren(this.gameObject);
         this.almanacTabs = tmp["AlmanacTabs"];
         this.almanacBody = tmp["AlmanacBody"];
-        
+
         var tabs = GetAllGameObjectChildren(this.almanacTabs);
         tmp = GetAllGameObjectChildren(this.almanacBody);
         this.almanacDescription = tmp["AlmanacDescription"];
-        this.mission = new AlmanacSection(tmp["AlmanacMissionArea"], tabs["MissionTab"]);
-        this.collection = new AlmanacSection(tmp["AlmanacCollectionArea"], tabs["CollectionTab"]);
-        this.tutorial = new AlmanacSection(tmp["AlmanacTutorialArea"], tabs["TutorialTab"]);
+        this.mission = new AlmanacSection(tmp["AlmanacMissionArea"], tabs["MissionTab"], this.almanac.Mission, this.longCell);
+        this.collection = new AlmanacSection(tmp["AlmanacCollectionArea"], tabs["CollectionTab"], this.almanac.Collection, this.smallCell);
+        this.tutorial = new AlmanacSection(tmp["AlmanacTutorialArea"], tabs["TutorialTab"], this.almanac.Tutorial, this.longCell);
 
         this.sections = new()
         {
@@ -42,8 +47,8 @@ public class AlmanacManager : MonoBehaviour
         };
 
         //this.almanacContainer.transform.position = new Vector3(0, 0, -9);
-        this.almanac.CreateGameObjects(this.almanacCollection);
-        this.Select(nameof(this.collection));
+        if (!this.isShown)
+            this.HideAlmanac();
     }
     private Dictionary<string, GameObject> GetAllGameObjectChildren(GameObject parent)
     {
@@ -54,7 +59,7 @@ public class AlmanacManager : MonoBehaviour
             values.Add(val.name, val);
         }
         return values;
-    } 
+    }
     /// <summary>
     /// Makes almanac visible
     /// </summary>
@@ -87,12 +92,12 @@ public class AlmanacManager : MonoBehaviour
         {
             if(item.Key == search)
             {
-               // Debug.Log($"Selected; Key: {item.Key  }; search: {search}");
+                // Debug.Log($"Selected; Key: {item.Key  }; search: {search}");
                 item.Value.Select(this.almanacBody);
             }
             else
             {
-               // Debug.Log($"Hide; Key: {item.Key}; search: {search}");
+                // Debug.Log($"Hide; Key: {item.Key}; search: {search}");
                 item.Value.Hide();
             }
         }
@@ -117,28 +122,35 @@ public class AlmanacManager : MonoBehaviour
         }
     }
 
+    public void CellClick(GameObject cell)
+    {
+
+    }
 }
 
 public class AlmanacSection
 {
     public GameObject collectionArea;
     public GameObject container;
-    public GameObject[] elements;
     public GameObject tab;
+    public AbstractElement[] dataElements;
+    private bool hidden = false;
 
-    private bool hidden= false;
-
-    public AlmanacSection(GameObject container, GameObject tab)
+    public AlmanacSection(GameObject container, GameObject tab, AbstractElement[] elements, GameObject prefab)
     {
         this.collectionArea = container;
+        this.dataElements = elements;
+
         Transform t = container.transform.GetChild(0) //Scroll
                                     .GetChild(0); //Container
+
         this.container = t.gameObject;
-        this.elements = new GameObject[t.childCount];
-        for (int i = 0; i < this.elements.Length; i++)
+        for (int i = 0; i < elements.Length; i++)
         {
-            this.elements[i] = t.GetChild(i).gameObject;
+            GameObject go = elements[i].GenerateGameObject(prefab);
+            go.transform.SetParent(t);
         }
+
         this.tab = tab;
         this.Hide();
     }
@@ -146,15 +158,15 @@ public class AlmanacSection
     {
         if (!this.hidden) return;
         this.hidden = false;
-        body.GetComponent<SpriteRenderer>().color = this.tab.GetComponent<SpriteRenderer>().color;
+        body.GetComponent<Image>().color = this.tab.GetComponent<Image>().color; // poi background = fn(this.tab.name)
         this.collectionArea.SetActive(true);
-      //  Debug.Log("Shown: " + this.tab.name);
+        //  Debug.Log("Shown: " + this.tab.name);
     }
     public void Hide()
     {
         if (this.hidden) return;
         this.hidden = true;
         this.collectionArea.SetActive(false);
-      //  Debug.Log("Hidden: " + this.tab.name);
+        //  Debug.Log("Hidden: " + this.tab.name);
     }
 }

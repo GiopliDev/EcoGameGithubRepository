@@ -5,26 +5,19 @@ public class Almanac
     public TutorialInfoElement[] Tutorial { get; set; }
     public MissionInfoElement[] Mission { get; set; }
 
-    public void CreateGameObjects(GameObject father)
-    {/*
-        //La funzione nameof() prende sempre il nome del parametro, in questo caso Collection
-        //Torna utile per dare un errore se è stato cambiato il nome
-        Bounds b = father.GetComponent<BoxCollider2D>().bounds;
-        float fatherWidth = b.max.x - b.min.x;
-        Vector2 size = new(fatherWidth / 8, 15);
-        for (int i = 0; i < this.Collection.Length; i++)
-        {
-            // this.Collection[i].ElementAsGameObject = GETPREFAB
+    public void CreateGameObjects(GameObject father, GameObject tinyElement, GameObject longElement)
+    {
+        foreach (var item in Collection) {
+            item.ElementAsGameObject = Object.Instantiate(tinyElement, Vector3.zero, Quaternion.identity);
         }
-        size.x = fatherWidth;
-        for (int i = 0; i < this.Tutorial.Length; i++)
+        foreach (var item in Tutorial)
         {
-            // this.Tutorial[i].ElementAsGameObject =  GETPREFAB 
+            item.ElementAsGameObject = Object.Instantiate(longElement, Vector3.zero, Quaternion.identity);
         }
-        for (int i = 0; i < this.Mission.Length; i++)
+        foreach (var item in Mission)
         {
-            // this.Mission[i].ElementAsGameObject = GETPREFAB
-        }*/
+            item.ElementAsGameObject = Object.Instantiate(longElement, Vector3.zero, Quaternion.identity);
+        }
     }
     public override string ToString()
     {
