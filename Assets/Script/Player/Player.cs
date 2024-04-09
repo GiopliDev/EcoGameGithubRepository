@@ -61,16 +61,7 @@ public class Player : MonoBehaviour
         //se premo E
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (lastCollision.gameObject.tag == "SceneObject")
-            {
-                if (inventoryManager.InventorySlots[inventoryManager.SelectedSlot].item.type == ItemType.Seed)
-                {
-                    plant();
-                }
-                else {
-                    pickUpManager();
-                }
-            }
+            Interact();
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -84,7 +75,7 @@ public class Player : MonoBehaviour
         {
             toggleTool(2); //pala
         }
-        
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (map.mapOpened == true)
@@ -107,44 +98,69 @@ public class Player : MonoBehaviour
             almanac.GetComponent<AlmanacManager>().HideAlmanac();
         }
     }
+    private void Interact()
+    {
+        if(!isColliding)
+        {
+            return;
+        }
+        if (lastCollision.gameObject.CompareTag("SceneObject"))
+        {
+            // PUO DARE ERRORE SE NON HA ELEMENTI
+            if (inventoryManager.InventorySlots[inventoryManager.SelectedSlot].item.type == ItemType.Seed)
+            {
+                plant();
+                return;
+            }
+            var tp = lastCollision.gameObject.GetComponent<TeleportManager>();
+            if (tp != null)
+            {
+                tp.Teleport(this.gameObject);
+            }
+            else
+            {
+                pickUpManager();
+            }
+        }
+    }
     private void pickUpManager()
     {
         //e non ho niente in mano
         if (hasObjectInHand == false && isColliding)
         {
-                //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
-                if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable)
-                {
-                    hasObjectInHand = true;
+            //controllo se sto toccando un oggetto di scena che ha la bool "isGrabbable" = true
+            if (lastCollision.gameObject.GetComponent<sceneObjectManager>().isGrabbable)
+            {
+                hasObjectInHand = true;
 
-                    //assegno l'oggetto che ho in mano
-                    objectInHand = lastCollision.gameObject;
+                //assegno l'oggetto che ho in mano
+                objectInHand = lastCollision.gameObject;
 
-                    objectInHand.GetComponent<sceneObjectManager>().objectPicked();
-                }
+                objectInHand.GetComponent<sceneObjectManager>().objectPicked();
+            }
         }
         else if (objectInHand.tag == "SceneObject")
         {
-                hasObjectInHand = false;
-                objectInHand.GetComponent<sceneObjectManager>().releaseObject();
-                objectInHand = null;
+            hasObjectInHand = false;
+            objectInHand.GetComponent<sceneObjectManager>().releaseObject();
+            objectInHand = null;
         }
     }
     public void plant()
     {
-       Instantiate(Resources.Load("Piante/woodPlant"));
-       Debug.Log("Piantata");
-        
+        Instantiate(Resources.Load("Piante/woodPlant"));
+        Debug.Log("Piantata");
+
     }
 
     public void toggleTool(int toolId) //N.B: il player deve avere la mano libera per prender in mano l'utensile 
     {
         if (hasObjectInHand == false) //se non ho niente in mano
         {
-            equippedToolId = toolId; //l'id del tool che andrò ad equipaggiare = toolId
+            equippedToolId = toolId; //l'id del tool che andrï¿½ ad equipaggiare = toolId
             hasObjectInHand = true;
         }
-        else if (equippedToolId != -1) //se invece ho qualcosa in mano ed è un utensile
+        else if (equippedToolId != -1) //se invece ho qualcosa in mano ed ï¿½ un utensile
         {
 
             //metto via l'utensile
@@ -153,12 +169,12 @@ public class Player : MonoBehaviour
             Debug.Log(objectInHand.name + " messo via");
 
 
-            if (equippedToolId == toolId) //se è lo stesso che avevo prima
+            if (equippedToolId == toolId) //se ï¿½ lo stesso che avevo prima
             {
                 equippedToolId = -1; //lo metto via
                 hasObjectInHand = false;
             }
-            else //se non lo è
+            else //se non lo ï¿½
             {
                 equippedToolId = toolId; //lo equipaggio
             }
@@ -184,7 +200,7 @@ public class Player : MonoBehaviour
 
     private void CheckEnemy(Collision2D coll)
     {
-        if (coll.gameObject.tag != "Enemy") return;
+        if (!coll.gameObject.CompareTag("Enemy")) return;
         if (this.whenLastHit + 1f > Time.realtimeSinceStartup) return;
         this.whenLastHit = Time.realtimeSinceStartup;
         this.hp -= 1; // HEALTH TO BE REDUCED BY SOME CONSTANT OTHERWHERE
@@ -211,4 +227,15 @@ public class Player : MonoBehaviour
     {
         isColliding = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        isColliding = true;
+        lastCollision = collider;
+    }
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        isColliding = false;
+    }
+    
 }
