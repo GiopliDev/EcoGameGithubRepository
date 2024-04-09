@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b067c6a6eb649c943ad012edb9a4a669, type: 3}
   m_Name: StickPlant
   m_EditorClassIdentifier: 
-  nome: Legno
-  fasi:
-  - {fileID: 21300000, guid: 66a02ff467758aa44b24ca14bf580af2, type: 3}
+  name: StickPlant
+  fases:
+  - {fileID: 21300000, guid: 20ae0df4b30a932409a716310643146c, type: 3}
   - {fileID: 21300000, guid: 28a48892abf8d1c4e9cd9ce4375cb75f, type: 3}
   - {fileID: 21300000, guid: 52834521ec0025f4e8c20af727afba77, type: 3}
   - {fileID: 21300000, guid: 7a6770647ec23c744a17db26b55c8079, type: 3}
-  IDCrescita: 0
+  IDgrowth: 0
   progressNeeded: 20
   progress: 0
