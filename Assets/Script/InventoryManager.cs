@@ -34,7 +34,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
+    public Item getObjectInHand() {
+        return InventorySlots[SelectedSlot].item;
+    }
 
     public bool AddItem(Item item)
     {

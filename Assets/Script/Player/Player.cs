@@ -63,13 +63,7 @@ public class Player : MonoBehaviour
         {
             if (lastCollision.gameObject.tag == "SceneObject")
             {
-                if (inventoryManager.InventorySlots[inventoryManager.SelectedSlot].item.type == ItemType.Seed)
-                {
-                    plant();
-                }
-                else {
-                    pickUpManager();
-                }
+                pickUpManager();
             }
         }
         if (Input.GetKeyDown(KeyCode.X))
