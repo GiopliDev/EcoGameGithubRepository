@@ -1,2 +1,3 @@
 # EcoGameGithubRepository
-Commentate al meglio il codice grazie $\color{red}:3$
+Game-jam project focused on environmental pollution.
+Made with Unity2D
